@@ -87,6 +87,27 @@ MARKETS = {
         "decimals": 5, "emoji": "🇪🇺", "name": "Euro",
         "session_gated": True, "weekend": False,   # FX: London/NY, weekdays
     },
+    # ── Outlook-only symbols ────────────────────────────────────────────────
+    # Added so the deterministic Outlook (outlook.py) covers the same cross-asset
+    # set as the TradingView indicator. These are ANALYSIS-ONLY — they're NOT in
+    # EXTRA_ASSETS, so the trade engine never fires signals on them; they only
+    # appear in the Outlook (and the daily brief scores). No COT for them (no
+    # cot_name) — the outlook is structure-based and doesn't use COT.
+    "NAS100": {
+        "td": "NDX", "yf": "NQ=F", "asset_class": "index",
+        "decimals": 2, "emoji": "💻", "name": "Nasdaq 100",
+        "session_gated": True, "weekend": False,
+    },
+    "USDJPY": {
+        "td": "USD/JPY", "yf": "USDJPY=X", "asset_class": "fx",
+        "decimals": 3, "emoji": "🇯🇵", "name": "USD/JPY",
+        "session_gated": True, "weekend": False,
+    },
+    "GBPUSD": {
+        "td": "GBP/USD", "yf": "GBPUSD=X", "asset_class": "fx",
+        "decimals": 5, "emoji": "🇬🇧", "name": "GBP/USD",
+        "session_gated": True, "weekend": False,
+    },
 }
 
 # ── Multi-asset layer (BTC + EUR via the same engine) ────────────────────────
@@ -94,6 +115,14 @@ MARKETS = {
 MULTI_ASSET_ENABLED = os.environ.get("MULTI_ASSET", "1") != "0"
 EXTRA_ASSETS = ["BTCUSD", "EURUSD"]
 EXTRA_MAX_TRADES_PER_DAY = 3   # per-asset daily cap for BTC/EUR (independent of gold)
+
+# ── Outlook (per-symbol 4H/Daily/Weekly structural report) ───────────────────
+# The deterministic outlook (outlook.py) runs over these symbols and posts a
+# once-daily report to Telegram + the dashboard. Defaults to everything in
+# MARKETS; override with a comma list, e.g. OUTLOOK_SYMBOLS="XAUUSD,NAS100,USDJPY,GBPUSD"
+# (each symbol must have a MARKETS entry so the data feed knows its ticker).
+OUTLOOK_SYMBOLS = [s.strip().upper() for s in os.environ.get("OUTLOOK_SYMBOLS", "").split(",") if s.strip()] \
+    or list(MARKETS.keys())
 
 # ── Gold engine — ICT/SMC concepts ────────────────────────────────────────────
 # One deterministic engine, not a multi-agent debate: confluence of these
