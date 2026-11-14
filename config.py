@@ -124,6 +124,28 @@ EXTRA_MAX_TRADES_PER_DAY = 3   # per-asset daily cap for BTC/EUR (independent of
 OUTLOOK_SYMBOLS = [s.strip().upper() for s in os.environ.get("OUTLOOK_SYMBOLS", "").split(",") if s.strip()] \
     or list(MARKETS.keys())
 
+# ── Signal engine (OUTLOOK-DRIVEN) ───────────────────────────────────────────
+# The live trade signals are now generated FROM the outlook (signals.py), not
+# from the old intraday trend-pullback confluence model (gold_engine.evaluate_
+# setup, still kept for backtest/reference). The outlook's weighted 4H/Daily/
+# Weekly bias vote picks direction; its scenario trigger level becomes the
+# entry; targets are the scenario levels (ADR-filled); the stop is built from
+# the nearest structural level + ADR. One unified engine across every symbol.
+SIGNAL_ENABLED = os.environ.get("SIGNALS", "1") != "0"
+# Which symbols may FIRE a signal. Defaults to the full outlook set (so NAS100/
+# USDJPY/GBPUSD now signal too, not just analysis). Restrict with e.g.
+# SIGNAL_SYMBOLS="XAUUSD,BTCUSD,EURUSD" to go back to the old tradable set.
+SIGNAL_SYMBOLS = [s.strip().upper() for s in os.environ.get("SIGNAL_SYMBOLS", "").split(",") if s.strip()] \
+    or list(OUTLOOK_SYMBOLS)
+SIGNAL_MIN_BIAS   = float(os.environ.get("SIGNAL_MIN_BIAS") or 0.45)  # |bias.norm| needed to fire
+#   0.45 = the outlook's own "BULLISH"/"BEARISH" threshold (below it is MILDLY/
+#   NEUTRAL → stand aside). This weighted multi-timeframe vote replaces the old
+#   ADX gate as the regime filter.
+SIGNAL_STOP_ADR   = float(os.environ.get("SIGNAL_STOP_ADR") or 0.75)  # stop buffer in ADRs when no structural level sits beyond entry
+SIGNAL_RISK_MIN_PCT = 0.003   # clamp risk distance to >= 0.30% of price (no micro-stops)
+SIGNAL_RISK_MAX_PCT = 0.030   # clamp risk distance to <= 3.00% of price (no runaway stops)
+SIGNAL_TGT_STEP_ADR = 0.75    # ADR step used to synthesise missing targets when levels run out
+
 # ── Gold engine — ICT/SMC concepts ────────────────────────────────────────────
 # One deterministic engine, not a multi-agent debate: confluence of these
 # factors produces a confidence score directly, so there's no "agents

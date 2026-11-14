@@ -72,6 +72,58 @@ def send_outlook(outlooks: list[dict]):
     send_text(header + "\n\n" + "\n\n".join(blocks))
 
 
+def format_signal(sig: dict) -> str:
+    """Formatter for the OUTLOOK-DRIVEN signal engine (signals.py). Works for
+    any symbol — decimals/emoji/name come from the signal (seeded from MARKETS).
+    Louder SNIPER treatment, same taxonomy the rest of the bot uses."""
+    from signals import SIGNAL_TAXONOMY
+    from config import MARKETS
+    asset = sig.get("asset", "")
+    m = MARKETS.get(asset, {})
+    dec = sig.get("decimals", m.get("decimals", 2))
+    emoji_m = sig.get("emoji", m.get("emoji", "📊"))
+    name = sig.get("name", m.get("name", asset))
+    label = sig.get("signal_label", "LONG")
+    t_emoji, t_name, t_desc = SIGNAL_TAXONOMY.get(label, ("📊", label, ""))
+    is_sniper = label == "SNIPER"
+    direction = sig.get("direction", "?")
+    arrow = "🟢" if direction == "LONG" else "🔴"
+    conf = sig.get("confidence", 0)
+    rr = sig.get("risk_reward", 0)
+
+    def fx(v):
+        try:
+            return f"{float(v):,.{dec}f}"
+        except Exception:
+            return str(v)
+
+    factors = "\n".join(f"  • {esc(f)}" for f in sig.get("factors", [])[:5])
+    header = "🎯🎯🎯 <b>SNIPER SETUP</b> 🎯🎯🎯" if is_sniper else f"{t_emoji} <b>{t_name}</b>"
+    lines = [
+        header,
+        f"<i>{esc(t_desc)}</i>" if t_desc else "",
+        "━━━━━━━━━━━━━━━━━━━━━",
+        f"{emoji_m} <b>{esc(name)} ({esc(asset)})</b>",
+        f"{arrow} <b>{direction}</b> · conf {conf:.0%} · {esc(sig.get('timeframe','4H/D/W'))}",
+        f"Entry:  <code>{fx(sig.get('entry', 0))}</code>",
+        f"Stop:   <code>{fx(sig.get('stop_loss', 0))}</code>",
+        f"TP1:    <code>{fx(sig.get('target_1', 0))}</code>  (1:{rr:.1f})",
+        f"TP2:    <code>{fx(sig.get('target_2', 0))}</code>",
+        f"TP3:    <code>{fx(sig.get('target_3', 0))}</code>",
+        "━━━━━━━━━━━━━━━━━━━━━",
+        factors,
+    ]
+    if DASHBOARD_URL:
+        lines.append(f'\n🔗 <a href="{DASHBOARD_URL}/">Full dashboard</a>')
+    return "\n".join(l for l in lines if l is not None)
+
+
+def send_signals(signals: list[dict]):
+    """Post each outlook-driven signal as its own Telegram message."""
+    for sig in signals:
+        send_text(format_signal(sig))
+
+
 def _bar(value: int, width: int = 8) -> str:
     filled = round(max(0, min(100, value)) / 100 * width)
     color  = "🔴" if value >= 75 else "🟢" if value <= 25 else "🟡"
