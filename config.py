@@ -87,6 +87,27 @@ MARKETS = {
         "decimals": 5, "emoji": "🇪🇺", "name": "Euro",
         "session_gated": True, "weekend": False,   # FX: London/NY, weekdays
     },
+    # ── Outlook-only symbols ────────────────────────────────────────────────
+    # Added so the deterministic Outlook (outlook.py) covers the same cross-asset
+    # set as the TradingView indicator. These are ANALYSIS-ONLY — they're NOT in
+    # EXTRA_ASSETS, so the trade engine never fires signals on them; they only
+    # appear in the Outlook (and the daily brief scores). No COT for them (no
+    # cot_name) — the outlook is structure-based and doesn't use COT.
+    "NAS100": {
+        "td": "NDX", "yf": "NQ=F", "asset_class": "index",
+        "decimals": 2, "emoji": "💻", "name": "Nasdaq 100",
+        "session_gated": True, "weekend": False,
+    },
+    "USDJPY": {
+        "td": "USD/JPY", "yf": "USDJPY=X", "asset_class": "fx",
+        "decimals": 3, "emoji": "🇯🇵", "name": "USD/JPY",
+        "session_gated": True, "weekend": False,
+    },
+    "GBPUSD": {
+        "td": "GBP/USD", "yf": "GBPUSD=X", "asset_class": "fx",
+        "decimals": 5, "emoji": "🇬🇧", "name": "GBP/USD",
+        "session_gated": True, "weekend": False,
+    },
 }
 
 # ── Multi-asset layer (BTC + EUR via the same engine) ────────────────────────
