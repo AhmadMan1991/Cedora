@@ -7,9 +7,16 @@ Performance) down to ONE deterministic ICT/SMC gold engine, because running
 five different scoring philosophies in parallel across nine assets was
 exactly what produced rare, conflicting, debate-gated NO_TRADE signals.
 
-New chain, XAUUSD only:
+New chain, all symbols:
 
-    COT → Gold Bias → Gold Scalp → Gold Swing → Performance
+    COT → Gold Bias → Outlook (4H/D/W) → Signals → Performance
+
+Signals are now OUTLOOK-DRIVEN (signals.py): the outlook's weighted
+4H/Daily/Weekly bias vote picks direction, its scenario trigger is the entry,
+its levels are the targets, and the stop is the nearest structural level + ADR.
+This replaced the old intraday trend-pullback scalp/swing/extra-asset layers
+(gold_engine.evaluate_setup + multi_asset.py are kept for backtest/reference
+only, no longer in the live chain). One engine across every symbol.
 
 The pipeline is fully deterministic — no LLM/narrative anywhere (the old
 Macro step, which depended on an external LLM, was removed).
@@ -24,8 +31,7 @@ Examples:
   python main.py                       # full sequential pipeline
   python main.py --layer cot
   python main.py --layer gold_bias
-  python main.py --layer gold_scalp
-  python main.py --layer gold_swing
+  python main.py --layer signals       # outlook-driven trade signals, all symbols
   python main.py --layer performance
   python main.py --layer news          # standalone, own schedule
   python main.py --layer tracer        # standalone, own schedule
@@ -191,81 +197,6 @@ def run_gold_bias_layer():
     return bias
 
 
-def run_gold_scalp_layer(cot_map=None):
-    """Step 4 — session-gated (London/NY killzone) liquidity-sweep scalp
-    scan. Additive confluence scoring — no multi-agent veto, so it can't
-    deadlock into NO_TRADE the way the old council did."""
-    print("\n═══ STEP 4 — GOLD SCALP ═══")
-    from gold_engine import run_gold_scalp
-    from performance_tracker import log_open_signal
-    signals = run_gold_scalp(cot_map)
-    print(f"\n  Fired: {len(signals)} gold scalp signal(s)")
-    for sig in signals:
-        # ONE message per signal (the full plan) + the chart. The old build
-        # also sent a separate "short" headline — 3 pings per trade — which
-        # read as duplicate spam.
-        telegram.send_text(telegram.format_gold_signal(sig))
-        _send_gold_chart("15min", sig,
-                          f"XAUUSD — {sig.get('direction')} scalp ({sig.get('signal_label')}, "
-                          f"conf {sig.get('confidence', 0):.0%})",
-                          layer="gold_scalp")
-        log_open_signal({**sig, "asset": ASSET,
-                          "entry": sig.get("entry", 0),
-                          "stop": sig.get("stop_loss", 0),
-                          "tp1": sig.get("target_1", 0),
-                          "tp2": sig.get("target_2", 0),
-                          "tp3": sig.get("target_3", 0)})
-    if not signals:
-        print("  (no session sweep setup — or outside killzone/cooldown/risk-limit)")
-    return signals
-
-
-def run_gold_swing_layer(cot_map=None):
-    """Step 5 — H1/H4 multi-day structure scan. Not session-gated (swing
-    doesn't need killzone timing), still risk/cooldown/news gated."""
-    print("\n═══ STEP 5 — GOLD SWING ═══")
-    from gold_engine import run_gold_swing
-    from performance_tracker import log_open_signal
-    signals = run_gold_swing(cot_map)
-    print(f"\n  Fired: {len(signals)} gold swing signal(s)")
-    for sig in signals:
-        telegram.send_text(telegram.format_gold_signal(sig))
-        _send_gold_chart("1h", sig,
-                          f"XAUUSD — {sig.get('direction')} swing ({sig.get('signal_label')}, "
-                          f"conf {sig.get('confidence', 0):.0%})",
-                          layer="gold_swing")
-        log_open_signal({**sig, "asset": ASSET,
-                          "entry": sig.get("entry", 0),
-                          "stop": sig.get("stop_loss", 0),
-                          "tp1": sig.get("target_1", 0),
-                          "tp2": sig.get("target_2", 0),
-                          "tp3": sig.get("target_3", 0)})
-    if not signals:
-        print("  (no multi-day structure setup — or cooldown/risk-limit/news block)")
-    return signals
-
-
-def run_extra_assets_layer():
-    """Step 5b — BTC + EUR through the SAME engine (consolidates the retired
-    scalp-council). Additive: independent per-asset state, never touches the
-    gold path above. Skips cleanly if MULTI_ASSET=0."""
-    from config import MULTI_ASSET_ENABLED
-    if not MULTI_ASSET_ENABLED:
-        return []
-    print("\n═══ STEP 5b — EXTRA ASSETS (BTC / EUR) ═══")
-    from multi_asset import run_extra_assets
-    from performance_tracker import log_open_signal
-    signals = run_extra_assets()
-    print(f"\n  Fired: {len(signals)} extra-asset signal(s)")
-    for sig in signals:
-        telegram.send_text(telegram.format_asset_signal(sig))
-        log_open_signal({**sig,
-                          "entry": sig.get("entry", 0), "stop": sig.get("stop_loss", 0),
-                          "tp1": sig.get("target_1", 0), "tp2": sig.get("target_2", 0),
-                          "tp3": sig.get("target_3", 0)})
-    return signals
-
-
 def run_performance_layer():
     """Step 6 (last) — audits the whole run: resolves TP1/TP2/STOP/EXPIRED,
     feeds resolved trades back into gold_engine's risk state (daily loss
@@ -299,7 +230,7 @@ def run_outlook_layer():
     outlooks = run_outlook()
     if not outlooks:
         print("  no outlook data")
-        return
+        return []
     try:
         dash.record_outlook(outlooks)
     except Exception as e:
@@ -309,6 +240,49 @@ def run_outlook_layer():
         print(f"  📨 outlook sent for {len(outlooks)} symbol(s)")
     else:
         print("  (outlook already sent today — Telegram skipped)")
+    return outlooks
+
+
+def run_signal_layer(outlooks=None):
+    """Trade signals, OUTLOOK-DRIVEN (signals.py) — replaces the old intraday
+    trend-pullback scalp/swing/extra-asset layers. The outlook's weighted
+    4H/Daily/Weekly bias vote picks direction; the scenario trigger is the
+    entry; targets are the scenario levels (ADR-filled); the stop is the nearest
+    structural level + ADR, risk-clamped. One engine across every SIGNAL_SYMBOLS
+    entry. Reuses the outlooks already computed by run_outlook_layer()."""
+    print("\n═══ SIGNALS — outlook-driven (all symbols) ═══")
+    from signals import run_signals
+    from performance_tracker import log_open_signal
+    import dashboard_export as dash
+    signals = run_signals(outlooks)
+    print(f"\n  Fired: {len(signals)} signal(s)")
+    for sig in signals:
+        telegram.send_text(telegram.format_signal(sig))
+        asset = sig.get("asset")
+        if asset == ASSET:
+            # gold keeps its rich setup chart (and dashboard record via the helper)
+            _send_gold_chart("4h", sig,
+                             f"XAUUSD — {sig.get('direction')} ({sig.get('signal_label')}, "
+                             f"conf {sig.get('confidence', 0):.0%})",
+                             layer="outlook_signal")
+        else:
+            try:
+                dash.record_signal(
+                    layer="outlook_signal", asset=asset, direction=sig.get("direction"),
+                    entry=sig.get("entry"), stop=sig.get("stop_loss"),
+                    tp1=sig.get("target_1"), tp2=sig.get("target_2"), tp3=sig.get("target_3"),
+                    score_or_conf=sig.get("confidence"), chart_png=None,
+                    extra={"signal_label": sig.get("signal_label"), "name": sig.get("name")},
+                )
+            except Exception as e:
+                print(f"    ⚠ dashboard export failed for {asset}: {e}")
+        log_open_signal({**sig, "asset": asset,
+                         "entry": sig.get("entry", 0), "stop": sig.get("stop_loss", 0),
+                         "tp1": sig.get("target_1", 0), "tp2": sig.get("target_2", 0),
+                         "tp3": sig.get("target_3", 0)})
+    if not signals:
+        print("  (no symbol cleared the bias threshold — or already sent today)")
+    return signals
 
 
 def run_pipeline():
@@ -317,11 +291,9 @@ def run_pipeline():
     tighter than the old 2h cycle since scalp setups are session-timed."""
     cot_map = run_cot_layer()
     run_gold_bias_layer()
-    run_gold_scalp_layer(cot_map)
-    run_gold_swing_layer(cot_map)
-    run_extra_assets_layer()
+    outlooks = run_outlook_layer()      # 4H/D/W analysis for all symbols (posts once/day)
+    run_signal_layer(outlooks)          # outlook-driven trade signals (reuses the outlooks)
     run_performance_layer()
-    run_outlook_layer()
 
 
 # ─────────────────────────────────────────────────────────────────────────
@@ -380,8 +352,8 @@ def run_backtest_layer(assets=None, bars=2000, window=500):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Gold-only Sequential Pipeline TradingBot")
     parser.add_argument("--layer", default=None,
-                        choices=["cot", "cot_map", "gold_bias", "gold_scalp", "gold_swing",
-                                 "extra", "performance", "news", "news_weekly", "tracer",
+                        choices=["cot", "cot_map", "gold_bias", "signals",
+                                 "performance", "news", "news_weekly", "tracer",
                                  "cot_weekly", "daily_brief", "outlook", "backtest"])
     parser.add_argument("--asset",  default=None)   # kept for backtest compat; engine itself is gold-only
     parser.add_argument("--bars",   type=int, default=2000)
@@ -401,12 +373,8 @@ if __name__ == "__main__":
             run_cot_layer()
         elif args.layer == "gold_bias":
             run_gold_bias_layer()
-        elif args.layer == "gold_scalp":
-            run_gold_scalp_layer()
-        elif args.layer == "gold_swing":
-            run_gold_swing_layer()
-        elif args.layer == "extra":
-            run_extra_assets_layer()
+        elif args.layer == "signals":
+            run_signal_layer()
         elif args.layer == "performance":
             run_performance_layer()
         elif args.layer == "news":

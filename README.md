@@ -38,21 +38,21 @@ COT  →  Gold Bias  →  Gold Scalp  →  Gold Swing  →  Performance
 | # | Step | What it does |
 |---|---|---|
 | 1 | `cot_agent.py` | Official CFTC gold positioning (insider-week.com fallback). Cached 180 min. Read as an additive input downstream, never a veto. |
-| 2 | `gold_engine.run_gold_bias()` | H4 EMA-stack + swing-structure read (BULLISH/BEARISH/NEUTRAL) + COT + USD-proxy context. Informational — surfaced on its own, doesn't gate scalp/swing. |
-| 3 | `gold_engine.run_gold_scalp()` | **Session-gated** (London 07-10 UTC / NY 12-16 UTC killzones only). Detects a liquidity sweep on M15 (stop hunt beyond a recent swing high/low that reverses) — the core entry trigger — then scores confluence: HTF structure agreement, order block/FVG overlap, COT alignment, Judas Swing context. Fires only above `GOLD_MIN_CONFIDENCE` (0.55), gated by cooldown, daily loss limit, and trade-count cap. |
-| 4 | `gold_engine.run_gold_swing()` | Same detection logic on H1/H4 for multi-day structure, not session-gated (swing doesn't need killzone timing) — still risk/cooldown/news gated. |
+| 2 | `gold_engine.run_gold_bias()` | H4 EMA-stack + swing-structure read (BULLISH/BEARISH/NEUTRAL) + COT + USD-proxy context. Informational — surfaced on its own + the 1H/4H/D/W scenario snapshot for the dashboard. |
+| 3 | `outlook.run_outlook()` | Deterministic 4H/Daily/Weekly structural outlook for **every symbol** — weighted bias vote, reference levels, scenario triggers, ADR. Posts once/day to Telegram + refreshes the dashboard. |
+| 4 | `signals.run_signals()` | **Trade signals, OUTLOOK-DRIVEN.** The outlook's weighted bias vote (`SIGNAL_MIN_BIAS`, 0.45) picks direction; the scenario trigger is the entry; targets are structural levels RR-guarded to ≥1R/2R/3R (ADR-filled); the stop is the nearest structural level + ADR, risk-clamped to 0.3–3% of price. One engine across every `SIGNAL_SYMBOLS` entry, once/day per symbol (re-fires on a direction flip). |
 | 5 | `performance_tracker.py` | Resolves open signals (TP1/TP2/STOP/EXPIRED), posts a scorecard, feeds outcomes back into the daily-loss circuit breaker, refreshes dashboard stats. |
 
-Runs **every 30 minutes, 07-16 UTC weekdays** (`pipeline.yml`) — spans both
-killzones plus the gap between them, since bias/swing aren't session-gated
-even though scalp is. Every step is individually runnable:
+Runs **every 30 minutes, 07-16 UTC weekdays** (`pipeline.yml`). The old
+intraday trend-pullback scalp/swing/extra-asset engine (`gold_engine.evaluate_setup`
++ `multi_asset.py`) is retired from the live chain and kept for backtest/reference
+only. Every step is individually runnable:
 
 ```bash
 python main.py --layer cot
-python main.py --layer macro
 python main.py --layer gold_bias
-python main.py --layer gold_scalp
-python main.py --layer gold_swing
+python main.py --layer outlook
+python main.py --layer signals
 python main.py --layer performance
 ```
 
