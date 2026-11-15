@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-13 21:32:42.763993+00:00",
+  "updated_at": "2026-11-15 10:36:10.485933+00:00",
   "data": {
     "XAUUSD": {
       "net": 179548,
@@ -10,6 +10,9 @@
       "source": "CFTC (official)"
     },
     "BTCUSD": null,
-    "EURUSD": null
+    "EURUSD": null,
+    "NAS100": null,
+    "USDJPY": null,
+    "GBPUSD": null
   }
 }
