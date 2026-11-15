@@ -1,0 +1,81 @@
+name: Outlook Dry Run (manual, no Telegram)
+
+# Manual-only. Computes the 4H/Daily/Weekly outlook + the would-fire signals for
+# every symbol and PRINTS them to the run log. No TELEGRAM_TOKEN is provided to
+# the job, so it physically cannot post to the channel — a safe "week ahead"
+# preview. Writes nothing back to the repo.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  outlook_dryrun:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Compute outlook + signals (print only, no send)
+        env:
+          TWELVEDATA_KEY: ${{ secrets.TWELVEDATA_KEY }}
+          # NOTE: deliberately NO TELEGRAM_TOKEN here — dry run cannot post.
+        run: |
+          python - <<'PY'
+          from outlook import run_outlook
+          from signals import outlook_signal, SIGNAL_MIN_BIAS
+
+          def f(v, d):
+              return "—" if v is None else f"{float(v):,.{d}f}"
+
+          print("\n" + "="*64)
+          print("  WEEK-AHEAD OUTLOOK — 4H / Daily / Weekly (dry run, no send)")
+          print("="*64)
+
+          outlooks = run_outlook()
+          if not outlooks:
+              print("  No outlook data returned (check data feed).")
+              raise SystemExit(0)
+
+          for o in outlooks:
+              d = o.get("decimals", 2)
+              b, s, lv, sc, vol = o["bias"], o["structure"], o["levels"], o["scenarios"], o["volatility"]
+              print(f"\n── {o['emoji']} {o['name']} ({o['symbol']}) "
+                    f"— {b['label']}  (score {b['norm']:+.2f})")
+              print(f"   Price {f(o['price'], d)}")
+              print(f"   Structure : 4H {s['h4']} · Daily {s['daily']} · Weekly {s['weekly']}")
+              print(f"   Levels    : PDH {f(lv['pdh'], d)} · PDL {f(lv['pdl'], d)} · "
+                    f"PWH {f(lv['pwh'], d)} · PWL {f(lv['pwl'], d)}")
+              if sc['bull']['trigger'] is not None:
+                  tg = ", ".join(f(x, d) for x in sc['bull']['targets']) or "open air"
+                  print(f"   Bull      : break {f(sc['bull']['trigger'], d)} → {tg}")
+              if sc['bear']['trigger'] is not None:
+                  tg = ", ".join(f(x, d) for x in sc['bear']['targets']) or "open air"
+                  print(f"   Bear      : break {f(sc['bear']['trigger'], d)} → {tg}")
+              if vol['used_pct'] is not None:
+                  print(f"   ADR       : {f(vol['adr'], d)}  (today used {vol['used_pct']:.0f}%)")
+
+              sig = outlook_signal(o)
+              if sig:
+                  print(f"   >> SIGNAL : {sig['signal_label']} {sig['direction']} "
+                        f"conf {sig['confidence']:.0%}")
+                  print(f"      entry {f(sig['entry'], d)} · stop {f(sig['stop_loss'], d)} · "
+                        f"TP {f(sig['target_1'], d)}/{f(sig['target_2'], d)}/{f(sig['target_3'], d)} "
+                        f"· RR {sig['risk_reward']}")
+              else:
+                  print(f"   >> SIGNAL : none (bias below ±{SIGNAL_MIN_BIAS:.2f} threshold)")
+
+          fired = sum(1 for o in outlooks if outlook_signal(o))
+          print("\n" + "="*64)
+          print(f"  {len(outlooks)} symbols analysed · {fired} would fire a signal")
+          print("="*64)
+          PY
