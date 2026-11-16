@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-16 16:56:29.072719+00:00",
+  "updated_at": "2026-11-16 23:39:31.902209+00:00",
   "signals": [
     {
       "layer": "outlook_signal",
@@ -1308,7 +1308,7 @@
         "title": "Retail Sales m/m",
         "currency": "USD",
         "time": "2026-11-17 13:30:00+00:00",
-        "forecast": "0.2%",
+        "forecast": "0.1%",
         "previous": "0.8%",
         "actual": null
       },
@@ -1321,7 +1321,7 @@
         "actual": null
       }
     ],
-    "updated_at": "2026-11-16 14:58:39.761433+00:00"
+    "updated_at": "2026-11-16 23:39:31.902179+00:00"
   },
   "outlook": {
     "symbols": [
