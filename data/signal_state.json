@@ -1,1 +1,22 @@
-{}
+{
+  "XAUUSD": {
+    "date": "2026-11-18",
+    "direction": "SHORT"
+  },
+  "EURUSD": {
+    "date": "2026-11-18",
+    "direction": "SHORT"
+  },
+  "BTCUSD": {
+    "date": "2026-11-18",
+    "direction": "SHORT"
+  },
+  "USDJPY": {
+    "date": "2026-11-18",
+    "direction": "LONG"
+  },
+  "GBPUSD": {
+    "date": "2026-11-18",
+    "direction": "SHORT"
+  }
+}
