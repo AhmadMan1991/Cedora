@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gold Engine · Dashboard</title>
+<title>Cedora Terminal</title>
 <style>
   :root{
-    --bg:#0b0e14; --bg2:#0f141d; --card:#151a23; --card2:#1b2230;
-    --line:#242c3a; --text:#e6e9ef; --muted:#8b93a5; --muted2:#5f6779;
-    --gold:#e0b64d; --green:#3fb950; --red:#f85149; --blue:#58a6ff;
-    --amber:#d29922; --radius:14px; --shadow:0 1px 0 rgba(255,255,255,.03),0 8px 24px rgba(0,0,0,.35);
+    --bg:#071024; --bg2:#0a1630; --card:#0e1d3c; --card2:#132648;
+    --line:#1d3159; --text:#eef2fb; --muted:#9aa8c6; --muted2:#63739a;
+    --gold:#e7c25a; --green:#3fb950; --red:#f85149; --blue:#6aa8ff;
+    --amber:#d8a93a; --radius:14px; --shadow:0 1px 0 rgba(255,255,255,.03),0 10px 30px rgba(0,0,0,.45);
   }
   @media (prefers-color-scheme: light){
     :root:not([data-theme="dark"]){
@@ -46,6 +46,13 @@
   .badge.stale{color:var(--amber); border-color:color-mix(in srgb,var(--amber) 45%,transparent)}
   .tbtn{cursor:pointer; background:var(--card); border:1px solid var(--line); color:var(--muted); border-radius:8px; padding:5px 9px; font-size:13px}
   .tbtn:hover{color:var(--text)}
+  .brand .mark{width:26px;height:26px;border-radius:7px;object-fit:cover;
+        box-shadow:0 0 0 1px color-mix(in srgb,var(--gold) 45%,transparent)}
+  .brand .name{color:var(--text)} .brand .sub{color:var(--gold); font-weight:600; letter-spacing:.5px; font-size:12px; margin-left:2px}
+  .hero{max-width:1180px; margin:18px auto 2px; padding:0 16px}
+  .hero img{width:100%; max-width:560px; display:block; margin:0 auto; border-radius:16px;
+        border:1px solid var(--line); box-shadow:var(--shadow)}
+  .hero .tag{text-align:center; color:var(--muted); font-size:13px; letter-spacing:.3px; margin-top:10px}
 
   h2.sec{font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.09em; color:var(--muted);
          margin:30px 2px 12px; display:flex; align-items:center; gap:8px}
@@ -107,7 +114,10 @@
 <body>
 <header>
   <div class="head-in">
-    <div class="brand"><span class="dot"></span> Gold Engine</div>
+    <div class="brand">
+      <img class="mark" src="cedora-logo.webp" alt="Cedora">
+      <span class="name">Cedora <span class="sub">TERMINAL</span></span>
+    </div>
     <div class="head-meta">
       <span class="badge" id="freshness">—</span>
       <span id="updated">loading…</span>
@@ -115,6 +125,10 @@
     </div>
   </div>
 </header>
+<div class="hero">
+  <img src="cedora-logo.webp" alt="Cedora Market Intelligence">
+  <div class="tag">Cedora Radar · deterministic market scanner — 4H / Daily / Weekly across every market</div>
+</div>
 
 <div class="wrap" id="app">
   <div class="empty">Loading dashboard…</div>

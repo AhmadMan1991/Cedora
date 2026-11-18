@@ -67,7 +67,7 @@ def send_outlook(outlooks: list[dict]):
     """Post the full multi-symbol outlook as one daily Telegram message."""
     if not outlooks:
         return
-    header = "📊 <b>MARKET OUTLOOK</b> — 4H / Daily / Weekly"
+    header = "🛰️ <b>CEDORA RADAR</b> · Market Outlook — 4H / Daily / Weekly"
     blocks = [format_outlook(o) for o in outlooks]
     send_text(header + "\n\n" + "\n\n".join(blocks))
 
@@ -100,6 +100,7 @@ def format_signal(sig: dict) -> str:
     factors = "\n".join(f"  • {esc(f)}" for f in sig.get("factors", [])[:5])
     header = "🎯🎯🎯 <b>SNIPER SETUP</b> 🎯🎯🎯" if is_sniper else f"{t_emoji} <b>{t_name}</b>"
     lines = [
+        "🛰️ <b>CEDORA RADAR</b>",
         header,
         f"<i>{esc(t_desc)}</i>" if t_desc else "",
         "━━━━━━━━━━━━━━━━━━━━━",
@@ -114,7 +115,7 @@ def format_signal(sig: dict) -> str:
         factors,
     ]
     if DASHBOARD_URL:
-        lines.append(f'\n🔗 <a href="{DASHBOARD_URL}/">Full dashboard</a>')
+        lines.append(f'\n🔗 <a href="{DASHBOARD_URL}/">Cedora Terminal</a>')
     return "\n".join(l for l in lines if l is not None)
 
 
@@ -563,7 +564,7 @@ def format_gold_signal(sig: dict) -> str:
         lines.append("\n🎯 <b>Extra focus:</b> highest-conviction confluence this "
                       "engine detects — session sweep + structure + COT all aligned.")
     if DASHBOARD_URL:
-        lines.append(f'\n🔗 <a href="{DASHBOARD_URL}/">Full dashboard</a>')
+        lines.append(f'\n🔗 <a href="{DASHBOARD_URL}/">Cedora Terminal</a>')
     return "\n".join(l for l in lines if l is not None)
 
 
@@ -600,7 +601,7 @@ def format_asset_signal(sig: dict) -> str:
         f"<i>{esc(sig.get('reasoning', ''))[:300]}</i>",
     ]
     if DASHBOARD_URL:
-        lines.append(f'\n🔗 <a href="{DASHBOARD_URL}/">Full dashboard</a>')
+        lines.append(f'\n🔗 <a href="{DASHBOARD_URL}/">Cedora Terminal</a>')
     return "\n".join(l for l in lines if l is not None)
 
 

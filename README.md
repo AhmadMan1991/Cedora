@@ -1,11 +1,16 @@
-# Gold Bot — XAUUSD ICT/SMC System
+# Cedora — Market Intelligence
 
-One deterministic engine, one asset: **XAUUSD only**, scalp + swing + intraday,
-built around ICT/Smart-Money-Concepts detection (liquidity sweeps, order
-blocks, fair value gaps, session killzones) with additive confluence scoring.
+**Cedora Radar** is the deterministic market scanner; **Cedora Terminal** is the
+dashboard it feeds. One engine across every market (XAU · BTC · EUR · NAS100 ·
+USDJPY · GBPUSD): a 4H/Daily/Weekly structural outlook drives directional bias,
+scenario triggers become entries, and structural levels set the targets — plus
+an ICT/Smart-Money gold engine (liquidity sweeps, order blocks, FVGs, session
+killzones) kept for backtest/reference. Fully deterministic — no LLM anywhere.
 
-**This system only sends alerts (Telegram + dashboard). It does not place
-real trades or connect to a broker.** You decide whether to act on a signal.
+*See the Market Differently.*
+
+**Cedora only sends alerts (Telegram + dashboard). It does not place real trades
+or connect to a broker.** You decide whether to act on a signal.
 
 ## Why gold-only, why one engine
 
