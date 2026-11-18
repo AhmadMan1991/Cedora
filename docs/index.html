@@ -109,30 +109,106 @@
   a{color:var(--blue)}
   .err{background:color-mix(in srgb,var(--red) 12%,var(--card)); border:1px solid color-mix(in srgb,var(--red) 40%,transparent);
        color:var(--text); padding:16px; border-radius:var(--radius); margin-top:24px}
+
+  /* ============ Cedora premium shell ============ */
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, color-mix(in srgb,var(--gold) 9%,transparent), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, color-mix(in srgb,var(--blue) 10%,transparent), transparent 55%),
+      var(--bg);
+    background-attachment:fixed;
+  }
+  /* nav */
+  .nav{position:sticky; top:0; z-index:20; backdrop-filter:blur(12px);
+    background:color-mix(in srgb,var(--bg) 82%,transparent); border-bottom:1px solid var(--line)}
+  .nav-in{display:flex; align-items:center; gap:18px; max-width:1180px; margin:0 auto; padding:11px 16px}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:800; font-size:17px; letter-spacing:.2px; text-decoration:none}
+  .navlinks{display:flex; gap:4px; margin-left:8px}
+  .navlinks a{color:var(--muted); text-decoration:none; font-size:13.5px; font-weight:600; padding:7px 12px;
+    border-radius:9px; transition:.15s; letter-spacing:.2px}
+  .navlinks a:hover{color:var(--text); background:var(--card)}
+  .navlinks a.active{color:var(--gold); background:color-mix(in srgb,var(--gold) 12%,transparent)}
+  .head-meta{margin-left:auto}
+  .upd{font-size:12.5px}
+  .badge.ok{color:var(--green); border-color:color-mix(in srgb,var(--green) 40%,transparent);
+    background:color-mix(in srgb,var(--green) 10%,transparent)}
+  /* hero */
+  .hero{max-width:1180px; margin:0 auto; padding:34px 16px 6px}
+  .hero-in{display:flex; flex-direction:column; align-items:center; text-align:center}
+  .hero-logo{width:100%; max-width:520px; border-radius:20px; border:1px solid var(--line);
+    box-shadow:0 20px 60px rgba(0,0,0,.5), 0 0 0 1px color-mix(in srgb,var(--gold) 16%,transparent)}
+  .hero-tag{max-width:640px; color:var(--muted); font-size:15px; line-height:1.65; margin:20px auto 0}
+  .hero-tag b{color:var(--text)}
+  .stats{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:20px}
+  .stat{display:inline-flex; align-items:center; gap:7px; font-size:13px; color:var(--muted);
+    background:var(--card); border:1px solid var(--line); border-radius:999px; padding:7px 14px}
+  .stat b{color:var(--gold); font-weight:800; letter-spacing:.3px}
+  .stat.live b,.stat.live{color:var(--green)}
+  .pdot{width:8px; height:8px; border-radius:50%; background:var(--green);
+    box-shadow:0 0 0 0 color-mix(in srgb,var(--green) 60%,transparent); animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--green) 55%,transparent)}
+    70%{box-shadow:0 0 0 7px transparent} 100%{box-shadow:0 0 0 0 transparent}}
+  .wrap{padding-top:10px}
+  /* section headers with gold accent */
+  h2.sec{scroll-margin-top:72px; font-size:12.5px}
+  h2.sec::before{content:""; width:3px; height:15px; border-radius:2px; background:var(--gold);
+    box-shadow:0 0 10px color-mix(in srgb,var(--gold) 50%,transparent)}
+  /* cards: lift + subtle top accent */
+  .card{position:relative; transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease; overflow:hidden}
+  .card:hover{transform:translateY(-2px); border-color:color-mix(in srgb,var(--gold) 28%,var(--line));
+    box-shadow:0 12px 34px rgba(0,0,0,.42)}
+  .kpi{background:linear-gradient(180deg,color-mix(in srgb,var(--card2) 55%,var(--card)),var(--card))}
+  .kpi .v{letter-spacing:-.6px}
+  .chip{font-weight:700}
+  /* footer */
+  footer{max-width:1180px; margin:54px auto 0; padding:26px 16px; border-top:1px solid var(--line);
+    text-align:center; color:var(--muted2)}
+  footer .fbrand{display:inline-flex; align-items:center; gap:9px; font-weight:800; color:var(--text); font-size:15px}
+  footer .fbrand img{width:22px; height:22px; border-radius:6px}
+  footer .ftag{color:var(--gold); font-size:12.5px; letter-spacing:.4px; margin-top:7px}
+  footer .fnote{font-size:12px; max-width:560px; margin:12px auto 0; line-height:1.6}
+  @media(max-width:720px){ .navlinks{display:none} .hero{padding-top:22px} .hero-tag{font-size:14px} }
 </style>
 </head>
 <body>
-<header>
-  <div class="head-in">
-    <div class="brand">
+<nav class="nav" id="top">
+  <div class="nav-in">
+    <a class="brand" href="#top">
       <img class="mark" src="cedora-logo.webp" alt="Cedora">
       <span class="name">Cedora <span class="sub">TERMINAL</span></span>
+    </a>
+    <div class="navlinks">
+      <a href="#outlook">Outlook</a>
+      <a href="#signals">Signals</a>
+      <a href="#performance">Performance</a>
+      <a href="#cot">COT</a>
     </div>
     <div class="head-meta">
       <span class="badge" id="freshness">—</span>
-      <span id="updated">loading…</span>
+      <span id="updated" class="upd">loading…</span>
       <button class="tbtn" id="theme" title="Toggle theme">◐</button>
     </div>
   </div>
-</header>
-<div class="hero">
-  <img src="cedora-logo.webp" alt="Cedora Market Intelligence">
-  <div class="tag">Cedora Radar · deterministic market scanner — 4H / Daily / Weekly across every market</div>
-</div>
+</nav>
 
-<div class="wrap" id="app">
+<header class="hero">
+  <div class="hero-in">
+    <img class="hero-logo" src="cedora-logo.webp" alt="Cedora Market Intelligence">
+    <p class="hero-tag">A deterministic <b>4H / Daily / Weekly</b> structural scan across gold, crypto, indices &amp; FX.
+      No black boxes, no LLM guesswork — every bias, trigger and target is <b>math you can trace.</b></p>
+    <div class="stats">
+      <span class="stat"><b>6</b> markets</span>
+      <span class="stat"><b>4H · D · W</b> timeframes</span>
+      <span class="stat"><b>100%</b> deterministic</span>
+      <span class="stat live"><span class="pdot"></span> Live</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="app">
   <div class="empty">Loading dashboard…</div>
-</div>
+</main>
 
 <script>
 "use strict";
@@ -398,6 +474,7 @@ function render(d){
   else { fresh.textContent='stale'; fresh.className='badge stale'; }
 
   app.innerHTML =
+    freshBanner(d) +
     kpis(d.performance) +
     analytics(d) +
     outlook(d.outlook) +
@@ -407,6 +484,34 @@ function render(d){
     signals(d.signals) +
     cot(d.cot) +
     news(d.news);
+  decorate();
+}
+
+function freshBanner(d){
+  const empty = !(d.performance && Object.keys(d.performance).length)
+    && !((d.signals||[]).length) && !((d.outlook&&d.outlook.symbols||[]).length);
+  if(!empty) return '';
+  return `<div class="card" style="text-align:center;padding:34px 18px;margin-top:10px">
+    <div style="font-size:30px">🛰️</div>
+    <h3 style="text-transform:none;font-size:17px;color:var(--text);margin:10px 0 4px">Fresh start — awaiting the first Cedora scan</h3>
+    <div class="small muted" style="max-width:520px;margin:0 auto">The dashboard was just reset. Live bias, signals and
+      performance populate on the next scan (weekdays, London/NY session). Everything you'll see here is generated by the
+      deterministic Cedora Radar engine.</div></div>`;
+}
+function decorate(){
+  const map=[['performance','performance'],['outlook','outlook'],['open positions','positions'],
+             ['recent signals','signals'],['cot positioning','cot']];
+  document.querySelectorAll('#app h2.sec').forEach(h=>{
+    const t=h.textContent.toLowerCase();
+    for(const [kw,id] of map){ if(t.includes(kw)){ h.id=id; break; } }
+  });
+  const links=[...document.querySelectorAll('.navlinks a')];
+  links.forEach(a=>{ a.style.display = document.getElementById(a.getAttribute('href').slice(1)) ? '' : 'none'; });
+  const vis=links.filter(a=>a.style.display!=='none');
+  const spy=()=>{ let cur=null;
+    vis.forEach(a=>{ const s=document.getElementById(a.getAttribute('href').slice(1)); if(s&&s.getBoundingClientRect().top<=96) cur=a; });
+    vis.forEach(a=>a.classList.toggle('active', a===cur)); };
+  window.addEventListener('scroll', spy, {passive:true}); spy();
 }
 
 /* theme toggle */
@@ -434,5 +539,11 @@ fetch('dashboard.json?t='+Date.now())
     document.getElementById('freshness').className='badge stale';
   });
 </script>
+<footer>
+  <div class="fbrand"><img src="cedora-logo.webp" alt="">Cedora Market Intelligence</div>
+  <div class="ftag">See the Market Differently.</div>
+  <div class="fnote">Cedora Radar is a deterministic analytics tool. It publishes structural bias, levels and
+    scenarios for research only — it is not financial advice and places no trades. You decide whether to act.</div>
+</footer>
 </body>
 </html>
