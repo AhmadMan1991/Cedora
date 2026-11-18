@@ -230,6 +230,7 @@
         <a href="#top">Overview</a>
         <a href="#outlook">Outlook</a>
         <a href="#signals">Signals</a>
+        <a href="#strategies">Strategies</a>
         <a href="#performance">Performance</a>
         <a href="#cot">COT positioning</a>
       </nav>
@@ -510,6 +511,74 @@ function cot(c){
     <div class="card"><table><thead><tr><th>Market</th><th class="num">Net</th><th class="num">Δ wk</th><th class="num">Index</th><th>Signal</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 
+/* Show account-revealing money fields (lots, floating/realised P/L)? Off by default.
+   The raw joker.json is still public when published — this only governs the UI. */
+const JOKER_SHOW_PL = false;
+function strategies(j){
+  const meta={ name:'Joker IB EA', account:'AL Joker',
+    engine:'Initial Balance + Supertrend-flip', brokers:'Vantage · FTMO',
+    sessions:'Asia · London · NY', rr:'1 : 1.5', magic:'777002' };
+  const sym=(j&&j.symbol)||'XAUUSD';
+  const up=parseTs(j&&j.updated_at);
+  const ageMin = up ? (Date.now()-up)/60000 : Infinity;
+  // Feed only heartbeats to the repo every ~30 min; treat >60 min (or no time) as offline.
+  let st=(j&&j.status)||'offline';
+  if(st!=='offline' && ageMin>60) st='offline';
+  const stMap={running:['badge ok','live'],flat:['badge','flat'],dd_locked:['badge stale','DD lock'],offline:['badge stale','offline']};
+  const [sc,sl]=stMap[st]||stMap.offline;
+  const dir=x=>{x=(x||'').toUpperCase();return (x==='BUY'||x==='LONG')?'long':(x==='SELL'||x==='SHORT')?'short':'neutral';};
+  const feed=[...(((j&&j.open)||[]).map(o=>({...o,_tag:'OPEN'}))),...((j&&j.signals)||[])].slice(0,12);
+  const detail=s=>{
+    const bits=[];
+    if(s.result) bits.push(esc(String(s.result).replace(/_/g,' ').toLowerCase()));
+    if(s.exit!=null) bits.push('exit '+fmtPrice(s.exit,sym));
+    if(s.gain_r!=null) bits.push((s.gain_r>0?'+':'')+esc(s.gain_r)+'R');
+    if(s.drawdown_pct!=null) bits.push('DD '+esc(s.drawdown_pct)+'%'+(s.limit_pct!=null?' / '+esc(s.limit_pct)+'%':''));
+    if(JOKER_SHOW_PL && s.lots!=null) bits.push(esc(s.lots)+' lots');
+    if(JOKER_SHOW_PL && s.profit!=null) bits.push((s.profit>0?'+':'')+esc(s.profit));
+    if(s.note) bits.push(esc(s.note));
+    return bits.length?`<div class="small muted" style="margin-top:6px">${bits.join(' · ')}</div>`:'';
+  };
+  let feedHtml;
+  if(feed.length){
+    feedHtml='<div class="grid sig" style="margin-top:12px">'+feed.map(s=>{
+      const dd=s.direction||'', hasLv=(s.entry!=null||s.sl!=null||s.tp!=null);
+      return `<div class="card"><div class="sig top">
+        <span class="asset">${esc(sym)}</span>
+        ${dd?`<span class="chip ${dir(dd)}">${esc(dd)}</span>`:''}
+        <span class="chip">${esc(s._tag||s.event||'SIGNAL')}</span>
+        <span class="when">${s.session?esc(s.session):''}${s.time?' · '+relTime(s.time):''}</span>
+      </div>
+      ${hasLv?`<div class="sig levels">
+        <span>Entry <b>${fmtPrice(s.entry,sym)}</b></span>
+        <span>Stop <b>${fmtPrice(s.sl,sym)}</b></span>
+        <span>TP <b>${fmtPrice(s.tp,sym)}</b></span>
+        ${s.rr?`<span>R:R <b>${esc(s.rr)}</b></span>`:''}
+      </div>`:''}
+      ${detail(s)}</div>`;
+    }).join('')+'</div>';
+  } else {
+    feedHtml='<div class="empty" style="margin-top:12px">Live signal feed not connected yet — the EA pushes its entries/closes here once it’s running on the VPS.</div>';
+  }
+  const info=(l,v)=>`<span style="display:inline-flex;gap:6px;align-items:baseline;padding:4px 10px;border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--muted)">${l} <b style="color:var(--text);font-weight:600">${esc(v)}</b></span>`;
+  const stamp = up ? 'feed '+relTime(j.updated_at) : (j?'feed idle':'no feed');
+  return `<h2 class="sec">Strategies</h2><div class="card">
+    <div class="sig top">
+      <span class="asset">🃏 ${esc(meta.name)}</span>
+      <span class="chip">${esc(meta.account)}</span>
+      ${j&&j.version?`<span class="small muted">v${esc(j.version)}</span>`:''}
+      <span class="when" style="margin-left:auto">${esc(stamp)}</span>
+      <span class="${sc}">${esc(sl)}</span>
+    </div>
+    <div class="small muted" style="margin-top:7px">${esc(meta.engine)} · ${esc(sym)} · MetaTrader 5 — live on VPS</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px">
+      ${info('Brokers',meta.brokers)}${info('Sessions',meta.sessions)}${info('Target R:R',meta.rr)}${info('Magic',meta.magic)}
+    </div>
+    ${feedHtml}
+    <div class="small muted" style="margin-top:10px">External MT5 Expert Advisor, shown for monitoring. Parameters are still under out-of-sample evaluation — not presented as a verified edge.</div>
+  </div>`;
+}
+
 function render(d){
   const app=document.getElementById('app');
   const up=parseTs(d.updated_at);
@@ -525,6 +594,7 @@ function render(d){
     kpis(d.performance) +
     analytics(d) +
     outlook(d.outlook) +
+    strategies(d.__joker) +
     openPositions(d.open_positions) +
     scenarios(d.scenarios) +
     brief(d.daily_brief) +
@@ -546,8 +616,8 @@ function freshBanner(d){
       deterministic Cedora Radar engine.</div></div>`;
 }
 function decorate(){
-  const map=[['performance','performance'],['outlook','outlook'],['open positions','positions'],
-             ['recent signals','signals'],['cot positioning','cot']];
+  const map=[['performance','performance'],['outlook','outlook'],['strategies','strategies'],
+             ['open positions','positions'],['recent signals','signals'],['cot positioning','cot']];
   document.querySelectorAll('#app h2.sec').forEach(h=>{
     const t=h.textContent.toLowerCase();
     for(const [kw,id] of map){ if(t.includes(kw)){ h.id=id; break; } }
@@ -591,18 +661,25 @@ function renderSessions(){
 }
 renderSessions(); setInterval(renderSessions, 20000);
 
-/* load (cache-busted) with graceful failure */
-fetch('dashboard.json?t='+Date.now())
-  .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-  .then(render)
-  .catch(err=>{
+/* load (cache-busted) with graceful failure; joker.json is an optional side feed */
+Promise.allSettled([
+  fetch('dashboard.json?t='+Date.now()).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }),
+  fetch('joker.json?t='+Date.now()).then(r=>r.ok?r.json():null).catch(()=>null)
+]).then(([dRes,jRes])=>{
+  if(dRes.status!=='fulfilled'){
+    const err=dRes.reason||new Error('load error');
     document.getElementById('app').innerHTML =
       `<div class="err"><b>Couldn't load dashboard data.</b><br>
        <span class="small muted">${esc(err.message)} — dashboard.json may not have been generated yet. It's written on each pipeline run.</span></div>`;
     document.getElementById('updated').textContent='load failed';
     document.getElementById('freshness').textContent='offline';
     document.getElementById('freshness').className='badge stale';
-  });
+    return;
+  }
+  const d=dRes.value;
+  d.__joker = (jRes.status==='fulfilled') ? jRes.value : null;
+  render(d);
+});
 </script>
 <footer>
   <div class="fbrand"><img src="cedora-logo.webp" alt="">Cedora Market Intelligence</div>
