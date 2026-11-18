@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,10 +20,10 @@
     }
   }
   :root[data-theme="light"]{
-    --bg:#f4f6fa; --bg2:#eef1f7; --card:#ffffff; --card2:#f7f9fc;
-    --line:#e3e8f0; --text:#1b2230; --muted:#5f6779; --muted2:#9aa3b2;
-    --gold:#b2860f; --green:#1a7f37; --red:#cf222e; --blue:#0969da; --amber:#9a6700;
-    --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.08);
+    --bg:#f6f8fc; --bg2:#eef2f8; --card:#ffffff; --card2:#f8fafd;
+    --line:#e6ebf3; --text:#0f1b2d; --muted:#5a6678; --muted2:#95a0b3;
+    --gold:#a8780a; --green:#117a37; --red:#c7243a; --blue:#0a66d6; --amber:#8a6400;
+    --shadow:0 1px 2px rgba(15,27,45,.05),0 4px 14px rgba(15,27,45,.06);
   }
   *{box-sizing:border-box}
   html,body{margin:0}
@@ -112,13 +112,7 @@
 
   /* ============ Cedora premium shell ============ */
   html{scroll-behavior:smooth}
-  body{
-    background:
-      radial-gradient(1200px 600px at 50% -10%, color-mix(in srgb,var(--gold) 9%,transparent), transparent 60%),
-      radial-gradient(900px 500px at 100% 0%, color-mix(in srgb,var(--blue) 10%,transparent), transparent 55%),
-      var(--bg);
-    background-attachment:fixed;
-  }
+  body{ background:var(--bg); }
   /* nav */
   .nav{position:sticky; top:0; z-index:20; backdrop-filter:blur(12px);
     background:color-mix(in srgb,var(--bg) 82%,transparent); border-bottom:1px solid var(--line)}
@@ -136,8 +130,8 @@
   /* hero */
   .hero{max-width:1180px; margin:0 auto; padding:34px 16px 6px}
   .hero-in{display:flex; flex-direction:column; align-items:center; text-align:center}
-  .hero-logo{width:100%; max-width:520px; border-radius:20px; border:1px solid var(--line);
-    box-shadow:0 20px 60px rgba(0,0,0,.5), 0 0 0 1px color-mix(in srgb,var(--gold) 16%,transparent)}
+  .hero-logo{width:100%; max-width:500px; border-radius:18px; border:1px solid var(--line);
+    box-shadow:0 10px 36px rgba(15,27,45,.16)}
   .hero-tag{max-width:640px; color:var(--muted); font-size:15px; line-height:1.65; margin:20px auto 0}
   .hero-tag b{color:var(--text)}
   .stats{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:20px}
@@ -152,12 +146,11 @@
   .wrap{padding-top:10px}
   /* section headers with gold accent */
   h2.sec{scroll-margin-top:72px; font-size:12.5px}
-  h2.sec::before{content:""; width:3px; height:15px; border-radius:2px; background:var(--gold);
-    box-shadow:0 0 10px color-mix(in srgb,var(--gold) 50%,transparent)}
-  /* cards: lift + subtle top accent */
-  .card{position:relative; transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease; overflow:hidden}
-  .card:hover{transform:translateY(-2px); border-color:color-mix(in srgb,var(--gold) 28%,var(--line));
-    box-shadow:0 12px 34px rgba(0,0,0,.42)}
+  h2.sec::before{content:""; width:3px; height:14px; border-radius:2px; background:var(--gold)}
+  /* cards: subtle lift */
+  .card{position:relative; transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease}
+  .card:hover{transform:translateY(-2px); border-color:color-mix(in srgb,var(--gold) 24%,var(--line));
+    box-shadow:0 10px 26px rgba(15,27,45,.10)}
   .kpi{background:linear-gradient(180deg,color-mix(in srgb,var(--card2) 55%,var(--card)),var(--card))}
   .kpi .v{letter-spacing:-.6px}
   .chip{font-weight:700}
