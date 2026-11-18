@@ -28,7 +28,7 @@ TWELVEDATA_KEY   = os.environ.get("TWELVEDATA_KEY", "")
 # GitHub Pages URL for the dashboard (repo made public, Pages serving /docs).
 # Override via env var if you host it elsewhere (Cloudflare Pages, Vercel, a
 # custom domain, etc.) — Telegram messages link here for "full report" reads.
-DASHBOARD_URL = os.environ.get("DASHBOARD_URL", "https://ahmadman1991.github.io/trading-bot")
+DASHBOARD_URL = os.environ.get("DASHBOARD_URL", "https://ahmadman1991.github.io/Cedora")
 
 _missing = [n for n, v in [("TELEGRAM_TOKEN", TELEGRAM_TOKEN), ("TWELVEDATA_KEY", TWELVEDATA_KEY)] if not v]
 if _missing:

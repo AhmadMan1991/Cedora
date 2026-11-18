@@ -156,7 +156,7 @@ setup: Settings → General → Danger Zone → Public; Settings → Pages → D
 from branch → `main` → `/docs`.
 
 `config.py`'s `DASHBOARD_URL` defaults to
-`https://ahmadman1991.github.io/trading-bot` — override via env var if
+`https://ahmadman1991.github.io/Cedora` — override via env var if
 hosted elsewhere.
 
 **To view locally instead**: `python3 serve_dashboard.py` from inside
