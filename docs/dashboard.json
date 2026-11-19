@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-19 22:41:34.419813+00:00",
+  "updated_at": "2026-11-19 23:11:39.953508+00:00",
   "signals": [
     {
       "layer": "outlook_signal",
@@ -220,8 +220,8 @@
       "tp2": 3614.37,
       "tp3": 3550.43,
       "opened_at": "2026-11-18 16:22:11.842201+00:00",
-      "live_price": 3678.15493,
-      "progress_pct": 1.003
+      "live_price": 3627.96377,
+      "progress_pct": 1.788
     },
     {
       "asset": "USDJPY",
@@ -254,8 +254,8 @@
       "tp2": 160.75,
       "tp3": 161.325,
       "opened_at": "2026-11-18 16:22:16.134270+00:00",
-      "live_price": 159.82152,
-      "progress_pct": 0.493
+      "live_price": 159.61174,
+      "progress_pct": 0.193
     },
     {
       "asset": "BTCUSD",
@@ -288,8 +288,8 @@
       "tp2": 59023.99,
       "tp3": 57124.43,
       "opened_at": "2026-11-19 15:40:03.413562+00:00",
-      "live_price": 63140.2,
-      "progress_pct": -0.386
+      "live_price": 61996.2,
+      "progress_pct": 0.435
     },
     {
       "asset": "EURUSD",
@@ -322,8 +322,8 @@
       "tp2": 1.09001,
       "tp3": 1.08586,
       "opened_at": "2026-11-19 15:40:03.775339+00:00",
-      "live_price": 1.09771,
-      "progress_pct": 0.142
+      "live_price": 1.09686,
+      "progress_pct": 0.347
     },
     {
       "asset": "USDJPY",
@@ -356,8 +356,8 @@
       "tp2": 161.068,
       "tp3": 161.63,
       "opened_at": "2026-11-19 15:40:07.162322+00:00",
-      "live_price": 159.82152,
-      "progress_pct": -0.255
+      "live_price": 159.61174,
+      "progress_pct": -0.692
     }
   ],
   "daily_brief": {
