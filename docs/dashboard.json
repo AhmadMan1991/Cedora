@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-19 15:40:58.736746+00:00",
+  "updated_at": "2026-11-19 15:43:46.792572+00:00",
   "signals": [
     {
       "layer": "outlook_signal",
@@ -351,29 +351,40 @@
     }
   ],
   "daily_brief": {
-    "date": "2026-11-18",
-    "summary": "\u0623\u0628\u0631\u0632 \u0627\u0644\u0623\u0635\u0648\u0644 \u0644\u0644\u0645\u0631\u0627\u0642\u0628\u0629 \u0627\u0644\u064a\u0648\u0645 \u2014 \ud83e\udd47 XAUUSD: \u0627\u062a\u062c\u0627\u0647 \u0647\u0627\u0628\u0637 (\u062b\u0642\u0629 \u0639\u0627\u0644\u064a\u0629\u060c \u0646\u0642\u0627\u0637 -3)\u061b \u20bf BTCUSD: \u0627\u062a\u062c\u0627\u0647 \u0647\u0627\u0628\u0637 (\u062b\u0642\u0629 \u0639\u0627\u0644\u064a\u0629\u060c \u0646\u0642\u0627\u0637 -3).\n\u26a0\ufe0f \u0627\u0644\u062e\u0637\u0631 \u0627\u0644\u0623\u0643\u0628\u0631: \u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0642\u062a\u0635\u0627\u062f\u064a\u0629 \u0623\u0645\u0631\u064a\u0643\u064a\u0629 \u0642\u0627\u062f\u0645\u0629 \u0642\u062f \u062a\u0642\u0644\u0628 \u0627\u0644\u0635\u0648\u0631\u0629 \u2014 \u062a\u0627\u0628\u0639 \u0627\u0644\u0645\u0641\u0643\u0631\u0629.",
+    "date": "2026-11-19",
+    "summary": "\u0623\u0628\u0631\u0632 \u0627\u0644\u0623\u0635\u0648\u0644 \u0644\u0644\u0645\u0631\u0627\u0642\u0628\u0629 \u0627\u0644\u064a\u0648\u0645 \u2014 \ud83e\udd47 XAUUSD: \u0627\u062a\u062c\u0627\u0647 \u0647\u0627\u0628\u0637 (\u062b\u0642\u0629 \u0639\u0627\u0644\u064a\u0629\u060c \u0646\u0642\u0627\u0637 -4)\u061b \u20bf BTCUSD: \u0627\u062a\u062c\u0627\u0647 \u0647\u0627\u0628\u0637 (\u062b\u0642\u0629 \u0639\u0627\u0644\u064a\u0629\u060c \u0646\u0642\u0627\u0637 -4).\n\u26a0\ufe0f \u0627\u0644\u062e\u0637\u0631 \u0627\u0644\u0623\u0643\u0628\u0631: \u062a\u0634\u0628\u0651\u0639 \u0641\u064a \u0627\u0644\u062a\u0645\u0648\u0636\u0639 \u0639\u0646\u062f \u0627\u0644\u0623\u0635\u0644 \u0627\u0644\u0623\u0642\u0648\u0649 \u2014 \u0627\u062d\u0630\u0631 \u0627\u0644\u0627\u0646\u0639\u0643\u0627\u0633 \u0627\u0644\u0645\u0636\u0627\u062f.",
     "scores": [
       {
         "asset": "XAUUSD",
         "emoji": "\ud83e\udd47",
-        "score": -3,
+        "score": -4,
         "signal": "\ud83d\udd34\ud83d\udd34",
         "confidence": "high",
         "confidence_ar": "\u0639\u0627\u0644\u064a\u0629",
         "bias": "BEARISH",
-        "price": 3758.11118,
+        "price": 3690.98267,
         "cot_signal": "NEUTRAL"
       },
       {
         "asset": "BTCUSD",
         "emoji": "\u20bf",
-        "score": -3,
+        "score": -4,
         "signal": "\ud83d\udd34\ud83d\udd34",
         "confidence": "high",
         "confidence_ar": "\u0639\u0627\u0644\u064a\u0629",
         "bias": "BEARISH",
-        "price": 63506.2,
+        "price": 62898.2,
+        "cot_signal": "NEUTRAL"
+      },
+      {
+        "asset": "GBPUSD",
+        "emoji": "\ud83c\uddec\ud83c\udde7",
+        "score": -4,
+        "signal": "\ud83d\udd34\ud83d\udd34",
+        "confidence": "high",
+        "confidence_ar": "\u0639\u0627\u0644\u064a\u0629",
+        "bias": "BEARISH",
+        "price": 1.3118022680282593,
         "cot_signal": "NEUTRAL"
       },
       {
@@ -381,32 +392,10 @@
         "emoji": "\ud83c\uddea\ud83c\uddfa",
         "score": -3,
         "signal": "\ud83d\udd34\ud83d\udd34",
-        "confidence": "high",
-        "confidence_ar": "\u0639\u0627\u0644\u064a\u0629",
-        "bias": "BEARISH",
-        "price": 1.09646,
-        "cot_signal": "NEUTRAL"
-      },
-      {
-        "asset": "GBPUSD",
-        "emoji": "\ud83c\uddec\ud83c\udde7",
-        "score": -3,
-        "signal": "\ud83d\udd34\ud83d\udd34",
-        "confidence": "high",
-        "confidence_ar": "\u0639\u0627\u0644\u064a\u0629",
-        "bias": "BEARISH",
-        "price": 1.3155471086502075,
-        "cot_signal": "NEUTRAL"
-      },
-      {
-        "asset": "NAS100",
-        "emoji": "\ud83d\udcbb",
-        "score": -2,
-        "signal": "\ud83d\udd34",
         "confidence": "medium",
         "confidence_ar": "\u0645\u062a\u0648\u0633\u0637\u0629",
         "bias": "BEARISH",
-        "price": 27200.25,
+        "price": 1.09828,
         "cot_signal": "NEUTRAL"
       },
       {
@@ -416,8 +405,19 @@
         "signal": "\ud83d\udfe2",
         "confidence": "medium",
         "confidence_ar": "\u0645\u062a\u0648\u0633\u0637\u0629",
-        "bias": "BULLISH",
-        "price": 159.28776,
+        "bias": "RANGING",
+        "price": 159.70253,
+        "cot_signal": "NEUTRAL"
+      },
+      {
+        "asset": "NAS100",
+        "emoji": "\ud83d\udcbb",
+        "score": -1,
+        "signal": "\ud83d\udd34",
+        "confidence": "medium",
+        "confidence_ar": "\u0645\u062a\u0648\u0633\u0637\u0629",
+        "bias": "BEARISH",
+        "price": 27229.25,
         "cot_signal": "NEUTRAL"
       }
     ],
@@ -433,19 +433,19 @@
         "action_ar": "\u0641\u0631\u0635\u0629 SHORT \u0639\u0646\u062f \u0627\u0644\u0645\u0642\u0627\u0648\u0645\u0629"
       },
       {
-        "asset": "EURUSD",
-        "direction_ar": "\u0647\u0628\u0648\u0637",
-        "action_ar": "\u0641\u0631\u0635\u0629 SHORT \u0639\u0646\u062f \u0627\u0644\u0645\u0642\u0627\u0648\u0645\u0629"
-      },
-      {
         "asset": "GBPUSD",
         "direction_ar": "\u0647\u0628\u0648\u0637",
         "action_ar": "\u0641\u0631\u0635\u0629 SHORT \u0639\u0646\u062f \u0627\u0644\u0645\u0642\u0627\u0648\u0645\u0629"
       },
       {
-        "asset": "NAS100",
+        "asset": "EURUSD",
         "direction_ar": "\u0647\u0628\u0648\u0637",
         "action_ar": "\u0641\u0631\u0635\u0629 SHORT \u0639\u0646\u062f \u0627\u0644\u0645\u0642\u0627\u0648\u0645\u0629"
+      },
+      {
+        "asset": "USDJPY",
+        "direction_ar": "\u0635\u0639\u0648\u062f",
+        "action_ar": "\u0645\u0631\u0627\u0642\u0628\u0629 \u0645\u0646\u0627\u0637\u0642 \u0627\u0644\u062f\u0639\u0645 \u0644\u0644\u062f\u062e\u0648\u0644 LONG"
       }
     ]
   },
