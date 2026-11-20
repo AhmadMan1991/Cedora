@@ -2,28 +2,23 @@ name: Gold Pipeline
 
 on:
   schedule:
-    # Every 30min, weekdays, starting 08:00 Europe/Amsterdam. The "Amsterdam
-    # time gate" step below drops any fire before 08:00 local, so the start is
-    # DST-correct year-round without touching this cron: 06:xx UTC covers
-    # summer (CEST, 08:00 local), 07:xx UTC covers winter (CET, 08:00 local).
-    # Runs through 16:00 UTC — spans both killzones (London 07-10, NY 12-16)
-    # plus the gap between them, since gold_bias/gold_swing aren't
-    # session-gated even though gold_scalp only fires inside a killzone.
-    # Runs the full chain as ONE job so every step sees the previous step's
-    # fresh output:
-    #   COT -> Gold Bias -> Gold Scalp -> Gold Swing
-    #   -> Performance (audits the run, updates the daily-loss circuit breaker)
-    # This replaces the old 9-asset/5-engine chain (scalp/swing/council/
-    # forecast/deep_pipeline) entirely — those files are deprecated stubs,
-    # their workflows below are manual-only relics kept for reference.
+    # EVERY 4 HOURS, weekdays, starting 07:00 Europe/Amsterdam — fires at local
+    # 07:00, 11:00, 15:00, 19:00, 23:00. The "Amsterdam time gate" step below is
+    # what enforces that; the cron just has to fire at every UTC hour that maps
+    # to one of those local hours in EITHER season (DST-correct, GitHub cron is
+    # UTC-only and does not follow DST):
+    #   winter CET  (UTC+1): local 07/11/15/19/23 = UTC 06/10/14/18/22
+    #   summer CEST (UTC+2): local 07/11/15/19/23 = UTC 05/09/13/17/21
+    # Union of those UTC hours is the cron below; the gate lets exactly the 5
+    # that land on a 4-hour slot through, so you get 5 runs/day in any season.
     #
-    # Offset to :08/:38 instead of :00/:30 — GitHub's own docs warn that
-    # scheduled workflows queued at the top of the hour (and other round
-    # minute marks) get delayed or silently dropped during high platform
-    # load, since that's when the largest number of repos across GitHub
-    # fire their cron jobs. This matches the multi-hour gaps we kept seeing
-    # in the commit history with no code-side explanation.
-    - cron: '8,38 6-16 * * 1-5'
+    # Runs the full chain as ONE job so every step sees the previous step's
+    # fresh output (COT -> Gold Bias -> Outlook -> Signals -> Performance).
+    #
+    # Offset to :08 instead of :00 — GitHub's own docs warn that scheduled
+    # workflows queued at the top of the hour get delayed or silently dropped
+    # under platform load.
+    - cron: '8 5,6,9,10,13,14,17,18,21,22 * * 1-5'
   workflow_dispatch:
 
 permissions:
@@ -34,22 +29,24 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      # Start the day at 08:00 Europe/Amsterdam, DST-correct. The cron fires
-      # from 06:xx UTC so summer (CEST) is covered; this gate skips every fire
-      # before 08:00 Amsterdam local. Manual runs (workflow_dispatch) always go.
-      - name: Amsterdam time gate
+      # Fire only on a 4-hour slot from 07:00 Europe/Amsterdam (07/11/15/19/23
+      # local), DST-correct. The cron fires at more UTC hours than needed; this
+      # gate lets through only the local hours where (hour mod 4 == 3) and
+      # hour >= 7 — i.e. 7, 11, 15, 19, 23. Manual runs always proceed.
+      - name: Amsterdam 4-hour gate
         id: gate
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "Manual run — proceeding."
             echo "run=true" >> "$GITHUB_OUTPUT"; exit 0
           fi
-          H=$(TZ=Europe/Amsterdam date +%H)
-          echo "Amsterdam local hour: $H"
-          if [ "$H" -ge 8 ]; then
+          h=$((10#$(TZ=Europe/Amsterdam date +%H)))
+          echo "Amsterdam local hour: $h"
+          if [ "$h" -ge 7 ] && [ $((h % 4)) -eq 3 ]; then
+            echo "On a 4-hour slot (07/11/15/19/23) — proceeding."
             echo "run=true" >> "$GITHUB_OUTPUT"
           else
-            echo "Before 08:00 Amsterdam — skipping this fire."
+            echo "Not a 4-hour slot from 07:00 Amsterdam — skipping this fire."
             echo "run=false" >> "$GITHUB_OUTPUT"
           fi
 

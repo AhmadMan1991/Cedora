@@ -248,7 +248,9 @@ def run_outlook_layer():
             print(f"    outlook accuracy: building ({accuracy.get('days',0)} day(s) of history)")
     except Exception as e:
         print(f"    ⚠ outlook accuracy failed: {e}")
-    if _should_notify("outlook", datetime.now(timezone.utc).strftime("%Y-%m-%d")):
+    # Post on every 4-hour run (keyed by date+hour), not once per day, so the
+    # outlook refreshes with each scheduled fire (07/11/15/19/23 Amsterdam).
+    if _should_notify("outlook", datetime.now(timezone.utc).strftime("%Y-%m-%d-%H")):
         telegram.send_outlook(outlooks, accuracy)
         print(f"  📨 outlook sent for {len(outlooks)} symbol(s)")
     else:
