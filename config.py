@@ -131,7 +131,9 @@ OUTLOOK_SYMBOLS = [s.strip().upper() for s in os.environ.get("OUTLOOK_SYMBOLS", 
 # Weekly bias vote picks direction; its scenario trigger level becomes the
 # entry; targets are the scenario levels (ADR-filled); the stop is built from
 # the nearest structural level + ADR. One unified engine across every symbol.
-SIGNAL_ENABLED = os.environ.get("SIGNALS", "1") != "0"
+# Trade-signal engine DISABLED — we only publish the structural OUTLOOK now
+# (the SNIPER/forecast-style trade setups are retired). Set SIGNALS=1 to re-enable.
+SIGNAL_ENABLED = os.environ.get("SIGNALS", "0") == "1"
 # Which symbols may FIRE a signal. Defaults to the full outlook set (so NAS100/
 # USDJPY/GBPUSD now signal too, not just analysis). Restrict with e.g.
 # SIGNAL_SYMBOLS="XAUUSD,BTCUSD,EURUSD" to go back to the old tradable set.

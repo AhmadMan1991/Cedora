@@ -179,6 +179,8 @@ def run_gold_bias_layer():
         reasons = ", ".join(telegram.esc(r) for r in bias.get("reasons", [])[:3])
         # Send the bias only when it FLIPS (or once a day), not every run —
         # a standing "BULLISH" repeated 18x/day is the noise, not a signal.
+        # Send the bias only when it FLIPS (or once a day), not every run —
+        # a standing "BULLISH" repeated all day is the noise, not a signal.
         if _should_notify("gold_bias", b):
             telegram.send_text(f"🥇 <b>Gold Bias (H4)</b>: {b}\n<i>{reasons}</i>")
         else:
@@ -304,11 +306,12 @@ def run_pipeline():
     """The full sequential chain, gold-only. Recommended cadence: every
     30-60min during London/NY sessions (07-16 UTC weekdays) via pipeline.yml —
     tighter than the old 2h cycle since scalp setups are session-timed."""
-    cot_map = run_cot_layer()
-    run_gold_bias_layer()
-    outlooks = run_outlook_layer()      # 4H/D/W analysis for all symbols (posts once/day)
-    run_signal_layer(outlooks)          # outlook-driven trade signals (reuses the outlooks)
-    run_performance_layer()
+    cot_map = run_cot_layer()           # COT data (feeds dashboard; map broadcasts via its own daily layer)
+    run_gold_bias_layer()               # gold bias (posts on flip) + dashboard scenarios — KEPT
+    run_outlook_layer()                 # structural outlook (posts) — KEPT
+    # Trade SIGNALS + performance tracking are retired (the SNIPER/trade setups).
+    # COT, gold bias and the outlook stay. Re-enable signals with SIGNALS=1 and by
+    # restoring run_signal_layer()/run_performance_layer() here.
 
 
 # ─────────────────────────────────────────────────────────────────────────
