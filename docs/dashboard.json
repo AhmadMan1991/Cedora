@@ -1,5 +1,5 @@
 {
-  "updated_at": null,
+  "updated_at": "2026-11-20 14:58:44.286448+00:00",
   "signals": [],
   "forecasts": [],
   "performance": {},
@@ -8,7 +8,46 @@
   "cot": {},
   "cot_history": [],
   "scenarios": {},
-  "outlook": { "symbols": [], "updated_at": null },
+  "outlook": {
+    "symbols": [],
+    "updated_at": null
+  },
   "outlook_accuracy": null,
-  "news": { "events": [], "updated_at": null }
+  "news": {
+    "events": [
+      {
+        "title": "Fed Chairman Warsh Speaks",
+        "currency": "USD",
+        "time": "2026-11-16 17:00:00+00:00",
+        "forecast": "",
+        "previous": "",
+        "actual": null
+      },
+      {
+        "title": "Core Retail Sales m/m",
+        "currency": "USD",
+        "time": "2026-11-17 13:30:00+00:00",
+        "forecast": "0.4%",
+        "previous": "0.9%",
+        "actual": null
+      },
+      {
+        "title": "Retail Sales m/m",
+        "currency": "USD",
+        "time": "2026-11-17 13:30:00+00:00",
+        "forecast": "0.1%",
+        "previous": "0.8%",
+        "actual": null
+      },
+      {
+        "title": "FOMC Meeting Minutes",
+        "currency": "USD",
+        "time": "2026-11-18 19:00:00+00:00",
+        "forecast": "",
+        "previous": "",
+        "actual": null
+      }
+    ],
+    "updated_at": "2026-11-20 14:58:44.286407+00:00"
+  }
 }
