@@ -47,7 +47,7 @@ SIGNAL_TAXONOMY = {
 }
 
 
-# ── per-symbol cooldown state (once/day, re-fires on a direction flip) ────────
+# ── per-symbol dedup state (last-fired direction + entry level; fires on change) ──
 def _load_state() -> dict:
     if STATE_FILE.exists():
         try:
@@ -186,9 +186,10 @@ def outlook_signal(o: dict) -> dict | None:
 def run_signals(outlooks: list | None = None) -> list[dict]:
     """Generate signals from the outlook for every SIGNAL_SYMBOLS entry.
 
-    Cooldown: a symbol fires at most once per UTC day, and re-fires only if its
-    direction FLIPS vs the last signal sent — so a standing bias doesn't spam
-    the channel on every 30-min run, but a genuine turn still alerts.
+    Dedup: a symbol fires when a NEW setup appears — i.e. the direction flips OR
+    the entry trigger moves to a different structural level vs the last signal
+    sent. A standing, unchanged setup is not re-sent on every run; but as soon
+    as price breaks to a new level (new entry) or the bias turns, it alerts.
     Pass `outlooks` to reuse an already-computed outlook list (the pipeline
     computes it once and feeds it to both the report and this engine)."""
     if not SIGNAL_ENABLED:
@@ -213,11 +214,17 @@ def run_signals(outlooks: list | None = None) -> list[dict]:
             print(f"  {emoji} {sym}: no signal (bias below {SIGNAL_MIN_BIAS:+.2f})")
             continue
         prev = state.get(sym) or {}
-        if prev.get("date") == today and prev.get("direction") == sig["direction"]:
-            print(f"  {emoji} {sym}: {sig['direction']} already sent today — skipped")
+        dec = o.get("decimals", MARKETS.get(sym, {}).get("decimals", 2))
+        entry_lvl = None if sig.get("entry") is None else round(float(sig["entry"]), dec)
+        # A "new setup" = the direction changed OR the entry trigger moved to a
+        # different structural level. An unchanged, still-standing setup is not
+        # re-sent, so the channel only pings on a genuinely new opportunity.
+        if prev.get("direction") == sig["direction"] and prev.get("entry") == entry_lvl:
+            print(f"  {emoji} {sym}: {sig['direction']} @ {entry_lvl} unchanged — skipped")
             continue
-        state[sym] = {"date": today, "direction": sig["direction"]}
-        print(f"  {emoji} {sym}: {sig['signal_label']} {sig['direction']} "
+        state[sym] = {"date": today, "direction": sig["direction"], "entry": entry_lvl,
+                      "ts": str(pd.Timestamp.now(tz="UTC"))}
+        print(f"  {emoji} {sym}: {sig['signal_label']} {sig['direction']} @ {entry_lvl} "
               f"conf={sig['confidence']:.0%}")
         fired.append(sig)
     _save_state(state)
