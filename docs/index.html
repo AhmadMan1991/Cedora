@@ -229,6 +229,7 @@
       <nav class="side-nav">
         <a href="#top">Overview</a>
         <a href="#outlook">Outlook</a>
+        <a href="#outlookacc">Outlook accuracy</a>
         <a href="#signals">Signals</a>
         <a href="#performance">Performance</a>
         <a href="#cot">COT positioning</a>
@@ -480,21 +481,47 @@ function news(n){
   const evs=(n&&n.events)||[];
   let body;
   if(!evs.length) body='<div class="empty">No high-impact events scheduled.</div>';
-  else body=evs.slice(0,10).map(e=>{
+  else body=evs.slice(0,12).map((e,i)=>{
     const d=parseTs(e.time);
-    const when=d?d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
-    let act='';
-    if(e.actual!=null){
-      const beat = (parseFloat(e.actual)>parseFloat(e.forecast));
-      act=`<span class="${beat?'pos':'neg'}">A ${esc(e.actual)}</span> · `;
-    }
-    return `<div class="ev">
+    const when=d?d.toLocaleString('en-US',{weekday:'short',hour:'2-digit',minute:'2-digit'}):'—';
+    const released=e.actual!=null&&String(e.actual).trim()!=='';
+    const val=released
+      ? `<b style="color:var(--text)">${esc(e.actual)}</b>`
+      : `<span class="muted">${esc(e.forecast??'—')}</span>`;
+    return `<div style="display:grid;grid-template-columns:70px 40px 1fr auto;gap:10px;align-items:center;padding:11px 0;${i?'border-top:1px solid var(--line)':''}">
+      <span class="small muted" style="font-variant-numeric:tabular-nums">${esc(when)}</span>
       <span class="chip">${esc(e.currency||'')}</span>
-      <div><div class="t">${esc(e.title)}</div><div class="meta">${when}</div></div>
-      <div class="vals">${act}F ${esc(e.forecast??'—')} · P ${esc(e.previous??'—')}</div>
+      <span style="font-size:13.5px;color:var(--text);line-height:1.35">${esc(e.title)}</span>
+      <span class="small" style="font-variant-numeric:tabular-nums;white-space:nowrap">${val}</span>
     </div>`;
   }).join('');
-  return `<h2 class="sec">Economic calendar (USD, high-impact)</h2><div class="card">${body}</div>`;
+  return `<h2 class="sec">Economic calendar</h2><div class="card" style="padding-top:4px;padding-bottom:4px">${body}</div>`;
+}
+
+function outlookAccuracy(a){
+  if(!a) return '';
+  const pct=a.accuracy_pct;
+  if(a.building||pct==null){
+    return `<h2 class="sec">Outlook accuracy</h2><div class="card"><div class="empty">Accuracy is building — it tracks each day's bias against the next day's move, so the first full 7-day read lands after about a week of scans.</div></div>`;
+  }
+  const per=a.per_symbol||{};
+  const bar=p=>`<span style="height:8px;border-radius:5px;background:var(--line);overflow:hidden;display:block"><span style="display:block;height:100%;width:${p==null?0:Math.max(0,Math.min(100,p))}%;background:var(--gold)"></span></span>`;
+  const rows=Object.entries(per).map(([s,v])=>{
+    const p=v.pct, cls=p>=60?'pos':p>=45?'':'neg';
+    return `<div style="display:grid;grid-template-columns:96px 1fr 76px;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--line)">
+      <span style="font-weight:600">${esc(s)}</span>
+      ${bar(p)}
+      <span class="num ${cls}" style="text-align:right;font-variant-numeric:tabular-nums">${p==null?'—':p+'%'}<span class="small muted"> ${v.correct}/${v.total}</span></span>
+    </div>`;
+  }).join('');
+  return `<h2 class="sec">Outlook accuracy</h2><div class="card">
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+      <span style="font-size:36px;font-weight:800;color:var(--text);line-height:1">${pct}%</span>
+      <span class="small muted">${a.correct}/${a.total} directional biases correct · last ${a.window_days} days</span>
+    </div>
+    <div style="margin-top:10px">${rows||'<div class="small muted">No per-symbol breakdown yet.</div>'}</div>
+    <div class="small muted" style="margin-top:12px">Each day's bias is scored against the next day's realized move; neutral reads are excluded. A research metric — not a performance guarantee.</div>
+  </div>`;
 }
 function cot(c){
   if(!c||!c.data) return '';
@@ -525,6 +552,7 @@ function render(d){
     kpis(d.performance) +
     analytics(d) +
     outlook(d.outlook) +
+    outlookAccuracy(d.outlook_accuracy) +
     openPositions(d.open_positions) +
     scenarios(d.scenarios) +
     brief(d.daily_brief) +
@@ -546,7 +574,7 @@ function freshBanner(d){
       deterministic Cedora Radar engine.</div></div>`;
 }
 function decorate(){
-  const map=[['performance','performance'],['outlook','outlook'],['open positions','positions'],
+  const map=[['performance','performance'],['outlook accuracy','outlookacc'],['outlook','outlook'],['open positions','positions'],
              ['recent signals','signals'],['cot positioning','cot']];
   document.querySelectorAll('#app h2.sec').forEach(h=>{
     const t=h.textContent.toLowerCase();

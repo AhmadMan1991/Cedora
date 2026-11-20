@@ -235,8 +235,21 @@ def run_outlook_layer():
         dash.record_outlook(outlooks)
     except Exception as e:
         print(f"    ⚠ dashboard export failed: {e}")
+    accuracy = None
+    try:
+        import outlook_accuracy as oa
+        oa.record_outlook_snapshot(outlooks)
+        accuracy = oa.score_accuracy(7)
+        dash.record_outlook_accuracy(accuracy)
+        if accuracy.get("accuracy_pct") is not None:
+            print(f"    outlook accuracy (7d): {accuracy['accuracy_pct']}% "
+                  f"({accuracy['correct']}/{accuracy['total']})")
+        else:
+            print(f"    outlook accuracy: building ({accuracy.get('days',0)} day(s) of history)")
+    except Exception as e:
+        print(f"    ⚠ outlook accuracy failed: {e}")
     if _should_notify("outlook", datetime.now(timezone.utc).strftime("%Y-%m-%d")):
-        telegram.send_outlook(outlooks)
+        telegram.send_outlook(outlooks, accuracy)
         print(f"  📨 outlook sent for {len(outlooks)} symbol(s)")
     else:
         print("  (outlook already sent today — Telegram skipped)")

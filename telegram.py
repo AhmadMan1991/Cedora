@@ -63,11 +63,19 @@ def format_outlook(o: dict) -> str:
     return "\n".join(lines)
 
 
-def send_outlook(outlooks: list[dict]):
-    """Post the full multi-symbol outlook as one daily Telegram message."""
+def send_outlook(outlooks: list[dict], accuracy: dict | None = None):
+    """Post the full multi-symbol outlook as one daily Telegram message.
+    Prepends a rolling outlook-accuracy line when history is available."""
     if not outlooks:
         return
     header = "🛰️ <b>CEDORA RADAR</b> · Market Outlook — 4H / Daily / Weekly"
+    if accuracy:
+        pct = accuracy.get("accuracy_pct")
+        if pct is not None and accuracy.get("total"):
+            header += (f"\n<i>Last {accuracy.get('window_days', 7)}d outlook accuracy: "
+                       f"{pct:.0f}% ({accuracy['correct']}/{accuracy['total']} directional biases)</i>")
+        elif accuracy.get("building"):
+            header += "\n<i>Outlook accuracy: building — needs a few days of history</i>"
     blocks = [format_outlook(o) for o in outlooks]
     send_text(header + "\n\n" + "\n\n".join(blocks))
 

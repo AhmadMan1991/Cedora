@@ -101,6 +101,13 @@ def record_outlook(outlooks: list) -> None:
     _save(d)
 
 
+def record_outlook_accuracy(summary: dict) -> None:
+    """Record the rolling outlook-accuracy scorecard (outlook_accuracy.py)."""
+    d = _load()
+    d["outlook_accuracy"] = summary or {}
+    _save(d)
+
+
 def record_scenarios(scenarios: dict) -> None:
     """Record the 1H/4H/Daily/Weekly structural snapshot
     (gold_engine.run_gold_scenarios()) + each timeframe's chart. One slot
