@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-21 19:55:55.499998+00:00",
+  "updated_at": "2026-11-21 20:11:33.371878+00:00",
   "signals": [],
   "forecasts": [
     {
@@ -22,7 +22,7 @@
         },
         "dollar_bias": "USD_NEUTRAL"
       },
-      "timestamp": "2026-11-21 19:55:50.202797+00:00",
+      "timestamp": "2026-11-21 20:11:25.800608+00:00",
       "chart": null
     }
   ],
@@ -144,7 +144,7 @@
       "GBPUSD": null
     },
     "summary": "1/6 markets reporting. 1 bullish, 0 bearish, 0 neutral. Most extreme: XAUUSD at 13/100 (crowded short).",
-    "timestamp": "2026-11-21 19:55:49.531914+00:00"
+    "timestamp": "2026-11-21 20:11:25.467879+00:00"
   },
   "cot_history": [
     {
@@ -173,13 +173,13 @@
         "EMA stack bearish (20<50<200)"
       ],
       "timeframe": "1H",
-      "price": 3536.23,
+      "price": 3536.21,
       "support": 3503.98,
       "resistance": 3595.51,
       "external_high": 4149.01,
       "external_low": 3503.98,
       "bos": null,
-      "updated_at": "2026-11-21 19:55:50.950860+00:00",
+      "updated_at": "2026-11-21 20:11:26.489207+00:00",
       "chart": "charts/scenario_1H.png"
     },
     "4H": {
@@ -189,13 +189,13 @@
         "Structure: lower-highs & lower-lows"
       ],
       "timeframe": "4H",
-      "price": 3536.23,
+      "price": 3536.21,
       "support": 3503.98,
       "resistance": 3901.18,
       "external_high": 4216.21,
       "external_low": 3503.98,
       "bos": "BEARISH",
-      "updated_at": "2026-11-21 19:55:51.264763+00:00",
+      "updated_at": "2026-11-21 20:11:27.034592+00:00",
       "chart": "charts/scenario_4H.png"
     },
     "Daily": {
@@ -205,13 +205,13 @@
         "Structure: lower-highs & lower-lows"
       ],
       "timeframe": "Daily",
-      "price": 3536.23,
+      "price": 3536.21,
       "support": 3503.98,
-      "resistance": 4200.64,
+      "resistance": 4198.87,
       "external_high": 5595.46,
       "external_low": 3503.98,
       "bos": "BEARISH",
-      "updated_at": "2026-11-21 19:55:51.539563+00:00",
+      "updated_at": "2026-11-21 20:11:27.557713+00:00",
       "chart": "charts/scenario_Daily.png"
     },
     "Weekly": {
@@ -220,13 +220,13 @@
         "Structure: lower-highs & lower-lows"
       ],
       "timeframe": "Weekly",
-      "price": 3536.23,
+      "price": 3536.21,
       "support": 3503.98,
       "resistance": 5419.25,
       "external_high": 5595.46,
       "external_low": 1810.1,
       "bos": "BEARISH",
-      "updated_at": "2026-11-21 19:55:51.877250+00:00",
+      "updated_at": "2026-11-21 20:11:28.127468+00:00",
       "chart": "charts/scenario_Weekly.png"
     }
   },
@@ -237,7 +237,7 @@
         "name": "Gold",
         "emoji": "\ud83e\udd47",
         "decimals": 2,
-        "price": 3536.22878,
+        "price": 3536.214,
         "bias": {
           "label": "BEARISH",
           "icon": "\ud83d\udc3b",
@@ -258,43 +258,42 @@
           "position": -1
         },
         "levels": {
-          "pdh": 3673.2295,
-          "pdl": 3504.02216,
-          "pdc": 3520.57004,
+          "pdh": 3537.81929,
+          "pdl": 3503.97701,
+          "pdc": 3536.202,
           "pwh": 4149.00711,
           "pwl": 3853.26757,
           "pmh": 4225.62012,
           "pml": 3871.18522,
           "week_high": 3901.17794,
           "week_low": 3503.97701,
-          "h4_high": 3535.81783,
-          "h4_low": 3532.75314,
+          "h4_high": 3536.69319,
+          "h4_low": 3534.79746,
           "pos_in_week_pct": 0.0
         },
         "scenarios": {
           "bull": {
-            "trigger": 3673.2295,
+            "trigger": 3536.69319,
             "targets": [
+              3537.81929,
               3901.17794,
-              4149.00711,
-              4225.62012
+              4149.00711
             ]
           },
           "bear": {
-            "trigger": 3532.75314,
+            "trigger": 3534.79746,
             "targets": [
-              3504.02216,
               3503.97701
             ]
           }
         },
         "volatility": {
-          "adr": 77.67196999999997,
-          "today_range": 33.842279999999846,
-          "used_pct": 43.6,
+          "adr": 77.30218785714283,
+          "today_range": 0.2090699999998833,
+          "used_pct": 0.3,
           "note": "Room left in the daily range for continuation."
         },
-        "timestamp": "2026-11-21 19:55:52.086441+00:00"
+        "timestamp": "2026-11-21 20:11:28.489481+00:00"
       },
       {
         "symbol": "EURUSD",
@@ -322,9 +321,9 @@
           "position": -1
         },
         "levels": {
-          "pdh": 1.09999,
-          "pdl": 1.09578,
-          "pdc": 1.09696,
+          "pdh": 1.0976,
+          "pdl": 1.09604,
+          "pdc": 1.09681,
           "pwh": 1.12513,
           "pwl": 1.10161,
           "pmh": 1.1337,
@@ -337,9 +336,9 @@
         },
         "scenarios": {
           "bull": {
-            "trigger": 1.098901,
+            "trigger": 1.0976,
             "targets": [
-              1.09999,
+              1.098901,
               1.10335,
               1.12513
             ]
@@ -347,25 +346,25 @@
           "bear": {
             "trigger": 1.096732,
             "targets": [
-              1.09578,
+              1.09604,
               1.09537
             ]
           }
         },
         "volatility": {
-          "adr": 0.005060000000000001,
-          "today_range": 0.0015600000000000058,
-          "used_pct": 30.8,
+          "adr": 0.004954285714285721,
+          "today_range": 0.0007800000000000029,
+          "used_pct": 15.7,
           "note": "Room left in the daily range for continuation."
         },
-        "timestamp": "2026-11-21 19:55:53.744335+00:00"
+        "timestamp": "2026-11-21 20:11:30.340978+00:00"
       },
       {
         "symbol": "BTCUSD",
         "name": "Bitcoin",
         "emoji": "\u20bf",
         "decimals": 2,
-        "price": 60206.4,
+        "price": 60386.4,
         "bias": {
           "label": "BEARISH",
           "icon": "\ud83d\udc3b",
@@ -389,19 +388,19 @@
           "pdh": 61000.0,
           "pdl": 55134.0,
           "pdc": 59938.8,
-          "pwh": 60260.3,
-          "pwl": 60068.7,
+          "pwh": 60477.7,
+          "pwl": 60113.5,
           "pmh": 87238.3,
           "pml": 76265.2,
-          "week_high": 60477.7,
-          "week_low": 60113.5,
-          "h4_high": 61000.0,
-          "h4_low": 58141.1,
-          "pos_in_week_pct": 71.9
+          "week_high": 60428.3,
+          "week_low": 60311.1,
+          "h4_high": 60477.7,
+          "h4_low": 59785.7,
+          "pos_in_week_pct": 74.9
         },
         "scenarios": {
           "bull": {
-            "trigger": 60260.3,
+            "trigger": 60428.3,
             "targets": [
               60477.7,
               61000.0,
@@ -409,10 +408,10 @@
             ]
           },
           "bear": {
-            "trigger": 60113.5,
+            "trigger": 60311.1,
             "targets": [
-              60068.7,
-              58141.1,
+              60113.5,
+              59785.7,
               55134.0
             ]
           }
@@ -423,7 +422,7 @@
           "used_pct": 22.8,
           "note": "Room left in the daily range for continuation."
         },
-        "timestamp": "2026-11-21 19:55:52.833378+00:00"
+        "timestamp": "2026-11-21 20:11:29.166849+00:00"
       },
       {
         "symbol": "GBPUSD",
@@ -484,7 +483,7 @@
           "used_pct": 6.7,
           "note": "Room left in the daily range for continuation."
         },
-        "timestamp": "2026-11-21 19:55:55.497738+00:00"
+        "timestamp": "2026-11-21 20:11:33.368447+00:00"
       },
       {
         "symbol": "USDJPY",
@@ -549,7 +548,7 @@
           "used_pct": 157.5,
           "note": "Range largely spent \u2014 fading extensions is higher-probability."
         },
-        "timestamp": "2026-11-21 19:55:54.816323+00:00"
+        "timestamp": "2026-11-21 20:11:32.367467+00:00"
       },
       {
         "symbol": "NAS100",
@@ -610,10 +609,10 @@
           "used_pct": 152.9,
           "note": "Range largely spent \u2014 fading extensions is higher-probability."
         },
-        "timestamp": "2026-11-21 19:55:54.289948+00:00"
+        "timestamp": "2026-11-21 20:11:31.328705+00:00"
       }
     ],
-    "updated_at": "2026-11-21 19:55:55.497958+00:00"
+    "updated_at": "2026-11-21 20:11:33.368820+00:00"
   },
   "outlook_accuracy": {
     "window_days": 7,
