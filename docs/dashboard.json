@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-21 20:11:33.371878+00:00",
+  "updated_at": "2026-11-23 17:31:07.821922+00:00",
   "signals": [],
   "forecasts": [
     {
@@ -628,38 +628,22 @@
   "news": {
     "events": [
       {
-        "title": "Fed Chairman Warsh Speaks",
+        "title": "Core PCE Price Index m/m",
         "currency": "USD",
-        "time": "2026-11-16 17:00:00+00:00",
-        "forecast": "",
-        "previous": "",
+        "time": "2026-11-25 13:30:00+00:00",
+        "forecast": "0.3%",
+        "previous": "0.3%",
         "actual": null
       },
       {
-        "title": "Core Retail Sales m/m",
+        "title": "Prelim GDP q/q",
         "currency": "USD",
-        "time": "2026-11-17 13:30:00+00:00",
-        "forecast": "0.4%",
-        "previous": "0.9%",
-        "actual": null
-      },
-      {
-        "title": "Retail Sales m/m",
-        "currency": "USD",
-        "time": "2026-11-17 13:30:00+00:00",
-        "forecast": "0.1%",
-        "previous": "0.8%",
-        "actual": null
-      },
-      {
-        "title": "FOMC Meeting Minutes",
-        "currency": "USD",
-        "time": "2026-11-18 19:00:00+00:00",
-        "forecast": "",
-        "previous": "",
+        "time": "2026-11-25 13:30:00+00:00",
+        "forecast": "3.5%",
+        "previous": "3.4%",
         "actual": null
       }
     ],
-    "updated_at": "2026-11-21 03:10:43.602704+00:00"
+    "updated_at": "2026-11-23 17:31:07.821882+00:00"
   }
 }
