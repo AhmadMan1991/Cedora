@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-27 00:44:32.705365+00:00",
+  "updated_at": "2026-11-27 14:54:37.680434+00:00",
   "signals": [],
   "forecasts": [
     {
@@ -9,7 +9,8 @@
       "forecast": {
         "bias": "BEARISH",
         "reasons": [
-          "EMA stack bearish (20<50<200)"
+          "EMA stack bearish (20<50<200)",
+          "Structure: lower-highs & lower-lows"
         ],
         "cot": {
           "net": 166132,
@@ -19,9 +20,9 @@
           "date": "2026-11-17",
           "source": "CFTC (official)"
         },
-        "dollar_bias": "USD_WEAK"
+        "dollar_bias": "USD_STRONG"
       },
-      "timestamp": "2026-11-26 14:57:48.294912+00:00",
+      "timestamp": "2026-11-27 14:54:32.768644+00:00",
       "chart": null
     }
   ],
@@ -143,7 +144,7 @@
       "GBPUSD": null
     },
     "summary": "1/6 markets reporting. 1 bullish, 0 bearish, 0 neutral. Most extreme: XAUUSD at 13/100 (crowded short).",
-    "timestamp": "2026-11-26 14:57:47.684353+00:00"
+    "timestamp": "2026-11-27 14:54:32.214404+00:00"
   },
   "cot_history": [
     {
@@ -199,6 +200,24 @@
         "USDJPY": null,
         "GBPUSD": null
       }
+    },
+    {
+      "date": "2026-11-27",
+      "data": {
+        "XAUUSD": {
+          "net": 166132,
+          "change": -23975,
+          "cot_index": 13,
+          "signal": "BULLISH",
+          "date": "2026-11-17",
+          "source": "CFTC (official)"
+        },
+        "BTCUSD": null,
+        "EURUSD": null,
+        "NAS100": null,
+        "USDJPY": null,
+        "GBPUSD": null
+      }
     }
   ],
   "scenarios": {
@@ -208,28 +227,29 @@
         "Structure: higher-highs & higher-lows"
       ],
       "timeframe": "1H",
-      "price": 3580.71,
-      "support": 3426.48,
-      "resistance": 3606.46,
+      "price": 3641.31,
+      "support": 3546.21,
+      "resistance": 3684.87,
       "external_high": 3901.18,
       "external_low": 3426.48,
-      "bos": null,
-      "updated_at": "2026-11-26 14:57:49.738980+00:00",
+      "bos": "BULLISH",
+      "updated_at": "2026-11-27 14:54:33.361715+00:00",
       "chart": "charts/scenario_1H.png"
     },
     "4H": {
       "bias": "BEARISH",
       "reasons": [
-        "EMA stack bearish (20<50<200)"
+        "EMA stack bearish (20<50<200)",
+        "Structure: lower-highs & lower-lows"
       ],
       "timeframe": "4H",
-      "price": 3580.71,
+      "price": 3641.31,
       "support": 3426.48,
       "resistance": 3689.08,
-      "external_high": 4200.45,
+      "external_high": 4198.87,
       "external_low": 3426.48,
       "bos": null,
-      "updated_at": "2026-11-26 14:57:50.135488+00:00",
+      "updated_at": "2026-11-27 14:54:33.696627+00:00",
       "chart": "charts/scenario_4H.png"
     },
     "Daily": {
@@ -239,13 +259,13 @@
         "Structure: lower-highs & lower-lows"
       ],
       "timeframe": "Daily",
-      "price": 3580.71,
+      "price": 3641.31,
       "support": 3426.48,
       "resistance": 4190.13,
       "external_high": 5595.46,
       "external_low": 3426.48,
       "bos": "BEARISH",
-      "updated_at": "2026-11-26 14:57:50.508987+00:00",
+      "updated_at": "2026-11-27 14:54:34.006207+00:00",
       "chart": "charts/scenario_Daily.png"
     },
     "Weekly": {
@@ -254,13 +274,13 @@
         "Structure: lower-highs & lower-lows"
       ],
       "timeframe": "Weekly",
-      "price": 3580.09,
+      "price": 3644.6,
       "support": 3426.48,
       "resistance": 5419.25,
       "external_high": 5595.46,
       "external_low": 1810.1,
       "bos": "BEARISH",
-      "updated_at": "2026-11-26 14:57:50.927355+00:00",
+      "updated_at": "2026-11-27 14:54:34.403341+00:00",
       "chart": "charts/scenario_Weekly.png"
     }
   },
@@ -271,7 +291,7 @@
         "name": "Gold",
         "emoji": "\ud83e\udd47",
         "decimals": 2,
-        "price": 3580.71024,
+        "price": 3641.30549,
         "bias": {
           "label": "BEARISH",
           "icon": "\ud83d\udc3b",
@@ -292,29 +312,30 @@
           "position": -1
         },
         "levels": {
-          "pdh": 3575.64561,
-          "pdl": 3426.47957,
-          "pdc": 3547.53124,
+          "pdh": 3606.46278,
+          "pdl": 3546.21096,
+          "pdc": 3567.46665,
           "pwh": 3901.17794,
           "pwl": 3503.97701,
           "pmh": 4225.62012,
           "pml": 3871.18522,
           "week_high": 3689.084,
           "week_low": 3426.47957,
-          "h4_high": 3577.08958,
-          "h4_low": 3551.89316,
-          "pos_in_week_pct": 19.3
+          "h4_high": 3684.86992,
+          "h4_low": 3659.00277,
+          "pos_in_week_pct": 34.6
         },
         "scenarios": {
           "bull": {
-            "trigger": 3689.084,
+            "trigger": 3684.86992,
             "targets": [
+              3689.084,
               3901.17794,
               4225.62012
             ]
           },
           "bear": {
-            "trigger": 3551.89316,
+            "trigger": 3546.21096,
             "targets": [
               3503.97701,
               3426.47957
@@ -322,24 +343,24 @@
           }
         },
         "volatility": {
-          "adr": 81.61670214285716,
-          "today_range": 60.25181999999995,
-          "used_pct": 73.8,
-          "note": "Roughly two-thirds of the average range used."
+          "adr": 86.86887071428575,
+          "today_range": 128.82920000000013,
+          "used_pct": 148.3,
+          "note": "Range largely spent \u2014 fading extensions is higher-probability."
         },
-        "timestamp": "2026-11-26 14:57:51.212453+00:00"
+        "timestamp": "2026-11-27 14:54:34.619021+00:00"
       },
       {
         "symbol": "EURUSD",
         "name": "Euro",
         "emoji": "\ud83c\uddea\ud83c\uddfa",
         "decimals": 5,
-        "price": 1.0984183549880981,
+        "price": 1.095650315284729,
         "bias": {
           "label": "BEARISH",
           "icon": "\ud83d\udc3b",
-          "norm": -0.783,
-          "score": -9.0
+          "norm": -0.87,
+          "score": -10.0
         },
         "structure": {
           "h4": "BEARISH",
@@ -352,59 +373,57 @@
           "ema": -1,
           "h4": -1,
           "bos": 0,
-          "position": 0
+          "position": -1
         },
         "levels": {
-          "pdh": 1.09925,
-          "pdl": 1.09316,
-          "pdc": 1.09798,
+          "pdh": 1.0989,
+          "pdl": 1.09575,
+          "pdc": 1.09724,
           "pwh": 1.10335,
           "pwl": 1.09537,
           "pmh": 1.1337,
           "pml": 1.11068,
           "week_high": 1.10055,
           "week_low": 1.08816,
-          "h4_high": 1.0984183549880981,
-          "h4_low": 1.0970927476882935,
-          "pos_in_week_pct": 38.2
+          "h4_high": 1.0979359149932861,
+          "h4_low": 1.0958904027938843,
+          "pos_in_week_pct": 3.5
         },
         "scenarios": {
           "bull": {
-            "trigger": 1.09925,
+            "trigger": 1.097936,
             "targets": [
+              1.0989,
               1.10055,
-              1.10335,
-              1.1337
+              1.10335
             ]
           },
           "bear": {
-            "trigger": 1.097093,
+            "trigger": 1.09537,
             "targets": [
-              1.09537,
-              1.09316,
               1.08816
             ]
           }
         },
         "volatility": {
-          "adr": 0.00471285714285717,
-          "today_range": 0.003149999999999986,
-          "used_pct": 66.8,
-          "note": "Roughly two-thirds of the average range used."
+          "adr": 0.0046478571428571714,
+          "today_range": 0.004190000000000138,
+          "used_pct": 90.1,
+          "note": "Range largely spent \u2014 fading extensions is higher-probability."
         },
-        "timestamp": "2026-11-26 14:57:52.752551+00:00"
+        "timestamp": "2026-11-27 14:54:35.980700+00:00"
       },
       {
         "symbol": "USDJPY",
         "name": "USD/JPY",
         "emoji": "\ud83c\uddef\ud83c\uddf5",
         "decimals": 3,
-        "price": 159.20700073242188,
+        "price": 159.49000549316406,
         "bias": {
           "label": "BULLISH",
           "icon": "\ud83d\udc02",
-          "norm": 0.783,
-          "score": 9.0
+          "norm": 0.87,
+          "score": 10.0
         },
         "structure": {
           "h4": "BULLISH",
@@ -417,54 +436,53 @@
           "ema": 1,
           "h4": 1,
           "bos": 0,
-          "position": 0
+          "position": 1
         },
         "levels": {
-          "pdh": 159.4929962158203,
-          "pdl": 158.66400146484375,
-          "pdc": 159.26199340820312,
+          "pdh": 159.32899475097656,
+          "pdl": 158.96099853515625,
+          "pdc": 159.21499633789062,
           "pwh": 159.96600341796875,
           "pwl": 158.5399932861328,
           "pmh": 158.94200134277344,
           "pml": 156.0959930419922,
-          "week_high": 159.56700134277344,
+          "week_high": 159.58099365234375,
           "week_low": 158.66400146484375,
-          "h4_high": 159.33200073242188,
-          "h4_low": 159.08200073242188,
-          "pos_in_week_pct": 46.8
+          "h4_high": 159.57400512695312,
+          "h4_low": 159.30799865722656,
+          "pos_in_week_pct": 66.6
         },
         "scenarios": {
           "bull": {
-            "trigger": 159.332001,
+            "trigger": 159.574005,
             "targets": [
-              159.492996,
-              159.567001,
+              159.580994,
               159.966003
             ]
           },
           "bear": {
-            "trigger": 159.082001,
+            "trigger": 159.307999,
             "targets": [
+              158.960999,
               158.664001,
-              158.539993,
-              156.095993
+              158.539993
             ]
           }
         },
         "volatility": {
-          "adr": 0.7223565237862724,
-          "today_range": 0.3860015869140625,
-          "used_pct": 53.4,
-          "note": "Room left in the daily range for continuation."
+          "adr": 0.7158562796456474,
+          "today_range": 0.4459991455078125,
+          "used_pct": 62.3,
+          "note": "Roughly two-thirds of the average range used."
         },
-        "timestamp": "2026-11-26 14:57:54.134170+00:00"
+        "timestamp": "2026-11-27 14:54:37.128251+00:00"
       },
       {
-        "symbol": "GBPUSD",
-        "name": "GBP/USD",
-        "emoji": "\ud83c\uddec\ud83c\udde7",
-        "decimals": 5,
-        "price": 1.3110626935958862,
+        "symbol": "BTCUSD",
+        "name": "Bitcoin",
+        "emoji": "\u20bf",
+        "decimals": 2,
+        "price": 59410.2,
         "bias": {
           "label": "BEARISH",
           "icon": "\ud83d\udc3b",
@@ -485,51 +503,114 @@
           "position": -1
         },
         "levels": {
-          "pdh": 1.3116130828857422,
-          "pdl": 1.304988980293274,
-          "pdc": 1.3111830949783325,
+          "pdh": 61630.6,
+          "pdl": 58100.1,
+          "pdc": 60627.6,
+          "pwh": 61632.7,
+          "pwl": 61305.3,
+          "pmh": 87238.3,
+          "pml": 76265.2,
+          "week_high": 61524.8,
+          "week_low": 59079.5,
+          "h4_high": 62234.3,
+          "h4_low": 61440.0,
+          "pos_in_week_pct": 0.0
+        },
+        "scenarios": {
+          "bull": {
+            "trigger": 61524.8,
+            "targets": [
+              61630.6,
+              61632.7,
+              62234.3
+            ]
+          },
+          "bear": {
+            "trigger": 59079.5,
+            "targets": [
+              58100.1
+            ]
+          }
+        },
+        "volatility": {
+          "adr": 3339.17857142857,
+          "today_range": 3154.800000000003,
+          "used_pct": 94.5,
+          "note": "Range largely spent \u2014 fading extensions is higher-probability."
+        },
+        "timestamp": "2026-11-27 14:54:35.241007+00:00"
+      },
+      {
+        "symbol": "GBPUSD",
+        "name": "GBP/USD",
+        "emoji": "\ud83c\uddec\ud83c\udde7",
+        "decimals": 5,
+        "price": 1.3118711709976196,
+        "bias": {
+          "label": "BEARISH",
+          "icon": "\ud83d\udc3b",
+          "norm": -0.609,
+          "score": -7.0
+        },
+        "structure": {
+          "h4": "BEARISH",
+          "daily": "BEARISH",
+          "weekly": "RANGING"
+        },
+        "votes": {
+          "weekly": 0,
+          "daily": -1,
+          "ema": -1,
+          "h4": -1,
+          "bos": 0,
+          "position": -1
+        },
+        "levels": {
+          "pdh": 1.312301516532898,
+          "pdl": 1.3097233772277832,
+          "pdc": 1.3113033771514893,
           "pwh": 1.3224014043807983,
           "pwl": 1.307958960533142,
           "pmh": 1.3433637619018555,
           "pml": 1.3138532638549805,
           "week_high": 1.3143194913864136,
           "week_low": 1.3013207912445068,
-          "h4_high": 1.3118538856506348,
-          "h4_low": 1.3096375465393066,
-          "pos_in_week_pct": 21.5
+          "h4_high": 1.313456416130066,
+          "h4_low": 1.3117163181304932,
+          "pos_in_week_pct": 27.1
         },
         "scenarios": {
           "bull": {
-            "trigger": 1.311613,
+            "trigger": 1.312302,
             "targets": [
-              1.311854,
+              1.313456,
               1.314319,
               1.322401
             ]
           },
           "bear": {
-            "trigger": 1.309638,
+            "trigger": 1.311716,
             "targets": [
+              1.309723,
               1.307959,
-              1.304989,
               1.301321
             ]
           }
         },
         "volatility": {
-          "adr": 0.0070874009813581195,
-          "today_range": 0.0026984214782714844,
-          "used_pct": 38.1,
+          "adr": 0.006913815225873675,
+          "today_range": 0.004093527793884277,
+          "used_pct": 59.2,
           "note": "Room left in the daily range for continuation."
         },
-        "timestamp": "2026-11-26 14:57:54.835569+00:00"
+        "timestamp": "2026-11-27 14:54:37.677483+00:00"
       },
       {
         "symbol": "NAS100",
         "name": "Nasdaq 100",
         "emoji": "\ud83d\udcbb",
         "decimals": 2,
-        "price": 26389.75,
+        "price": 26322.5,
         "bias": {
           "label": "MILDLY BEARISH",
           "icon": "\ud83d\udc3b",
@@ -559,142 +640,77 @@
           "pml": 28232.75,
           "week_high": 27137.0,
           "week_low": 25027.5,
-          "h4_high": 26372.75,
-          "h4_low": 26100.25,
-          "pos_in_week_pct": 42.8
+          "h4_high": 26436.0,
+          "h4_low": 26322.5,
+          "pos_in_week_pct": 40.8
         },
         "scenarios": {
           "bull": {
-            "trigger": 27137.0,
+            "trigger": 26350.75,
             "targets": [
-              28279.25,
-              31616.5
+              26436.0,
+              27137.0,
+              28279.25
             ]
           },
           "bear": {
-            "trigger": 26100.25,
+            "trigger": 25027.5,
             "targets": [
-              25027.5,
               24976.5
             ]
           }
         },
         "volatility": {
-          "adr": 1034.4464285714287,
-          "today_range": 438.5,
-          "used_pct": 42.4,
-          "note": "Room left in the daily range for continuation."
+          "adr": 1065.357142857143,
+          "today_range": 871.25,
+          "used_pct": 81.8,
+          "note": "Roughly two-thirds of the average range used."
         },
-        "timestamp": "2026-11-26 14:57:53.297013+00:00"
-      },
-      {
-        "symbol": "BTCUSD",
-        "name": "Bitcoin",
-        "emoji": "\u20bf",
-        "decimals": 2,
-        "price": 60815.1,
-        "bias": {
-          "label": "MILDLY BEARISH",
-          "icon": "\ud83d\udc3b",
-          "norm": -0.217,
-          "score": -2.5
-        },
-        "structure": {
-          "h4": "RANGING",
-          "daily": "BEARISH",
-          "weekly": "BULLISH"
-        },
-        "votes": {
-          "weekly": 1,
-          "daily": -1,
-          "ema": -1,
-          "h4": 0,
-          "bos": 0,
-          "position": -1
-        },
-        "levels": {
-          "pdh": 60289.7,
-          "pdl": 57300.0,
-          "pdc": 58339.9,
-          "pwh": 60954.5,
-          "pwl": 60790.4,
-          "pmh": 87238.3,
-          "pml": 76265.2,
-          "week_high": 60971.2,
-          "week_low": 60700.1,
-          "h4_high": 61071.0,
-          "h4_low": 60467.3,
-          "pos_in_week_pct": 15.1
-        },
-        "scenarios": {
-          "bull": {
-            "trigger": 60954.5,
-            "targets": [
-              60971.2,
-              61071.0,
-              87238.3
-            ]
-          },
-          "bear": {
-            "trigger": 60790.4,
-            "targets": [
-              60700.1,
-              60467.3,
-              57300.0
-            ]
-          }
-        },
-        "volatility": {
-          "adr": 3450.799999999999,
-          "today_range": 3530.5,
-          "used_pct": 102.3,
-          "note": "Range largely spent \u2014 fading extensions is higher-probability."
-        },
-        "timestamp": "2026-11-26 14:57:51.979494+00:00"
+        "timestamp": "2026-11-27 14:54:36.595638+00:00"
       }
     ],
-    "updated_at": "2026-11-26 14:57:54.835875+00:00"
+    "updated_at": "2026-11-27 14:54:37.677809+00:00"
   },
   "outlook_accuracy": {
     "window_days": 7,
-    "days": 3,
-    "total": 12,
-    "correct": 5,
+    "days": 4,
+    "total": 18,
+    "correct": 9,
     "neutral": 0,
-    "accuracy_pct": 41.7,
+    "accuracy_pct": 50.0,
     "per_symbol": {
       "BTCUSD": {
-        "correct": 1,
-        "total": 2,
-        "pct": 50.0
+        "correct": 2,
+        "total": 3,
+        "pct": 66.7
       },
       "EURUSD": {
-        "correct": 1,
-        "total": 2,
-        "pct": 50.0
+        "correct": 2,
+        "total": 3,
+        "pct": 66.7
       },
       "GBPUSD": {
         "correct": 1,
-        "total": 2,
-        "pct": 50.0
+        "total": 3,
+        "pct": 33.3
       },
       "NAS100": {
-        "correct": 0,
-        "total": 2,
-        "pct": 0.0
+        "correct": 1,
+        "total": 3,
+        "pct": 33.3
       },
       "USDJPY": {
-        "correct": 1,
-        "total": 2,
-        "pct": 50.0
+        "correct": 2,
+        "total": 3,
+        "pct": 66.7
       },
       "XAUUSD": {
         "correct": 1,
-        "total": 2,
-        "pct": 50.0
+        "total": 3,
+        "pct": 33.3
       }
     },
-    "as_of": "2026-11-26",
+    "as_of": "2026-11-27",
     "building": false
   },
   "news": {
